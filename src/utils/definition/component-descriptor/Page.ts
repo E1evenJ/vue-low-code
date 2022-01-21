@@ -1,12 +1,12 @@
 import { ToolType } from '@/utils/enums'
-import { AttributeDescreptor, Uuid } from '../AttributeDescreptor'
-import { EventDescreptor } from '../EventDescreptor'
-import { Descriptor } from './descriptor'
+import { IAttributeDescreptor, Uuid } from '../AttributeDescreptor'
+import { IEventDescreptor } from '../EventDescreptor'
+import { IDescriptor } from './descriptor'
 
-export class Page implements Descriptor {
+export class Page implements IDescriptor {
   tools: ToolType[]
-  attrDescs: AttributeDescreptor[]
-  eventDescs: EventDescreptor[]
+  attrDescs: IAttributeDescreptor[]
+  eventDescs: IEventDescreptor[]
   constructor() {
     this.attrDescs = [new Uuid()]
     this.eventDescs = []

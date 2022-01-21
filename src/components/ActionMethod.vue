@@ -30,7 +30,7 @@
         </div>
       </template>
     </el-tree>
-    <div class="detail" :class="{ 'no-padding': currentAction }">
+    <div class="detail" :class="{ 'no-padding': currentMethod !== null }">
       <template v-if="currentActionGroup">
         <el-row justify="start">
           <el-col :span="4">函数名称</el-col>
@@ -52,7 +52,14 @@
         <div class="code-tools">
           <el-button type="primary" size="small" @click="saveMethodName">保存</el-button>
         </div>
-        <Codemirror v-model:value="currentMethod.code" :options="cmOptions" border></Codemirror>
+        <MonacoEditor
+          language="typescript"
+          v-model="currentMethod.code"
+          theme="vs-dark"
+          :value="currentMethod.code"
+          :options="options"
+          @editorDidMount="editorMounted"
+        ></MonacoEditor>
       </template>
     </div>
   </div>
@@ -62,19 +69,17 @@
 import { randomName } from '@/utils/common'
 import { Method, ActionGroup, RenderTree, Action } from '@/utils/render-tree'
 import { Options, Vue } from 'vue-class-component'
-import Codemirror from 'codemirror-editor-vue3'
-// language
-import 'codemirror/mode/javascript/javascript.js'
-// theme
-import 'codemirror/theme/dracula.css'
 import { ActionTypeEnum } from '@/utils/enums'
 import { ActionName } from '@/utils/const'
 import ActionTemplate from './ActionTemplate.vue'
 import { reactive } from 'vue-demi'
+import { ref } from 'vue'
+
+import MonacoEditor from 'monaco-editor-vue3'
 
 @Options({
   components: {
-    Codemirror,
+    MonacoEditor,
     ActionTemplate
   },
   props: {
@@ -93,14 +98,9 @@ export default class ActionMethod extends Vue {
   currentMethod: Method | null = null
   currentAction: Action | null = null
   editor: any
-  cmOptions = {
-    mode: 'text/javascript', // Language mode
-    theme: 'dracula', // Theme
-    lineNumbers: true, // Show line number
-    smartIndent: true, // Smart indent
-    indentUnit: 2, // The smart indent unit is 2 spaces in length
-    foldGutter: true, // Code folding
-    styleActiveLine: true // Display the style of the selected row
+  options = {
+    selectOnLineNumbers: false,
+    key: ''
   }
 
   mounted(): void {
@@ -133,7 +133,7 @@ export default class ActionMethod extends Vue {
       const methodName = `fn_${randomName()}`
       const method = reactive({
         name: methodName,
-        code: `export function ${methodName}() {\n\n}`,
+        code: ref(`export function ${methodName}() {\n\n}`),
         isSync: false
       }) as Method
       data.children.push(method)
@@ -150,6 +150,7 @@ export default class ActionMethod extends Vue {
       data.actions.push(action)
       data.children.push(action)
       this.currentAction = action
+      this.options.key = `key_${randomName()}`
       this.currentActionGroup = null
       this.currentMethod = null
     }
@@ -170,6 +171,7 @@ export default class ActionMethod extends Vue {
         this.currentActionGroup = null
         this.currentMethod = null
         this.currentAction = data
+        this.options.key = `key_${randomName()}`
       } else {
         this.currentMethod = null
         this.currentAction = null
@@ -184,11 +186,18 @@ export default class ActionMethod extends Vue {
 
   saveMethodName() {
     if (this.currentMethod) {
-      let res = /export function (.*?)\(\)/.exec(this.currentMethod.code)
-      console.log(this.currentMethod.code, res)
-      const methodName = res && res[1]
+      let res = /(export async|export) function (.*?)\(\)/.exec(this.currentMethod.code)
+      const methodName = res && res[2]
       this.currentMethod.name = methodName as string
+      this.currentMethod.code = this.editor.getValue()
+      res = /export async function/.exec(this.currentMethod.code)
+      console.log(res)
+      this.currentMethod.isSync = res !== null
     }
+  }
+
+  editorMounted(editor: any) {
+    this.editor = editor
   }
 }
 </script>
@@ -208,6 +217,7 @@ export default class ActionMethod extends Vue {
     flex: 1;
     text-align: left;
     padding: 10px 20px;
+    height: 63vh;
   }
   .no-padding {
     padding: 0;
@@ -234,8 +244,16 @@ export default class ActionMethod extends Vue {
   }
   .codemirror-container {
     width: 55vw;
-    height: 60vh;
+    height: 62vh;
     border-radius: 0;
+    border: 0;
+    // :deep {
+    //   .CodeMirror-scroll {
+    //     margin-bottom: 0;
+    //     margin-right: 0;
+    //     padding-bottom: 0;
+    //   }
+    // }
   }
 }
 </style>

@@ -5,6 +5,5 @@ declare module '*.vue' {
   export default component
 }
 
-declare module 'codemirror-editor-vue3' {
-  
+declare module 'monaco-editor-vue3' {
 }

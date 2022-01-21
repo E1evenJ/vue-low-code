@@ -1,6 +1,6 @@
 import { ToolType } from '@/utils/enums'
 import {
-  AttributeDescreptor,
+  IAttributeDescreptor,
   Uuid,
   ElementSize,
   InputType,
@@ -11,7 +11,7 @@ import {
   Span
 } from '../AttributeDescreptor'
 import {
-  EventDescreptor,
+  IEventDescreptor,
   BlurE,
   ChangeE,
   ClickE,
@@ -21,12 +21,12 @@ import {
   KeydownE,
   KeyUpE
 } from '../EventDescreptor'
-import { Descriptor } from './descriptor'
+import { IDescriptor } from './descriptor'
 
-export class Input implements Descriptor {
+export class Input implements IDescriptor {
   tools: ToolType[]
-  attrDescs: AttributeDescreptor[]
-  eventDescs: EventDescreptor[]
+  attrDescs: IAttributeDescreptor[]
+  eventDescs: IEventDescreptor[]
   constructor() {
     this.attrDescs = [
       new Uuid(),

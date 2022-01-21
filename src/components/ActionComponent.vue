@@ -28,7 +28,7 @@
 </template>
 
 <script lang="ts">
-import { EventDescreptor } from '@/utils/definition/EventDescreptor'
+import { IEventDescreptor } from '@/utils/definition/EventDescreptor'
 import { ActionTypeEnum } from '@/utils/enums'
 import { Action, Event, RenderTree } from '@/utils/render-tree'
 import { Options, Vue } from 'vue-class-component'
@@ -59,7 +59,7 @@ export default class ActionComponent extends Vue {
 
   init(metadata: RenderTree) {
     metadata.events = metadata.events || []
-    this.eventsTree = metadata.desc.eventDescs.map<Event>((item: EventDescreptor) => {
+    this.eventsTree = metadata.desc.eventDescs.map<Event>((item: IEventDescreptor) => {
       const event = this.metadata.events?.find(event => event.eventName === item.key)
       if (event) {
         event.isRoot = true

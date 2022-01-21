@@ -2,7 +2,7 @@
 import { componentTreeHandler, RenderTree } from '@/utils/render-tree'
 import { Options, Vue } from 'vue-class-component'
 import { h, resolveComponent } from 'vue'
-import { AttributeDescreptor } from '@/utils/definition/AttributeDescreptor'
+import { IAttributeDescreptor } from '@/utils/definition/AttributeDescreptor'
 import { RenderTypeEnum } from '@/utils/enums'
 
 @Options({
@@ -22,7 +22,7 @@ export default class AttrsConfig extends Vue {
       return h(
         'div',
         {},
-        componentMetaData.desc.attrDescs.map((attrDesc: AttributeDescreptor) => {
+        componentMetaData.desc.attrDescs.map((attrDesc: IAttributeDescreptor) => {
           componentMetaData.attrs.uuid = componentMetaData.uuid
           return this.renderAttrItem(attrDesc, componentMetaData.attrs)
         })
@@ -31,7 +31,7 @@ export default class AttrsConfig extends Vue {
       return h('div')
     }
   }
-  private renderAttrItem(attrDesc: AttributeDescreptor, attrs: any) {
+  private renderAttrItem(attrDesc: IAttributeDescreptor, attrs: any) {
     let attrComponent
     const clazzName = attrDesc.constructor.name
     const modelFiledName = clazzName[0].toLowerCase() + clazzName.substring(1)

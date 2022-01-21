@@ -1,7 +1,7 @@
 // import { resolveComponent, TransitionGroup, h, ConcreteComponent } from 'vue';
 // import { VueDraggableNext } from 'vue-draggable-next';
 
-import { Descriptor } from './definition/component-descriptor/descriptor'
+import { IDescriptor } from './definition/component-descriptor/descriptor'
 import { getDefaultAttrs } from './definition/DefaultAttributeFactory'
 import { getDescriptor } from './definition/DescriptorFactory'
 import { ActionTypeEnum, ComponentLevelEnum, ComponentTypeEnum, StoreTypeEnum } from './enums'
@@ -49,7 +49,7 @@ export interface RenderTree {
   events?: Event[]
   methods?: Method[]
   methodGroups?: ActionGroup[]
-  desc: Descriptor
+  desc: IDescriptor
   children: RenderTree[]
 }
 

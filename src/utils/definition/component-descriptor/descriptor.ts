@@ -1,9 +1,9 @@
 import { ToolType } from "@/utils/enums";
-import { AttributeDescreptor } from "../AttributeDescreptor";
-import { EventDescreptor } from "../EventDescreptor";
+import { IAttributeDescreptor } from "../AttributeDescreptor";
+import { IEventDescreptor } from "../EventDescreptor";
 
-export interface Descriptor {
+export interface IDescriptor {
   tools: ToolType[];
-  attrDescs: AttributeDescreptor[];
-  eventDescs: EventDescreptor[];
+  attrDescs: IAttributeDescreptor[];
+  eventDescs: IEventDescreptor[];
 }
