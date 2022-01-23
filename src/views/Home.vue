@@ -1,10 +1,10 @@
 <template>
   <div class="home">
     <Header class="header"></Header>
-    <div class="oz-disigner">
-      <ComponentBar></ComponentBar>
-      <Container></Container>
-      <Attributes></Attributes>
+    <div class="oz-disigner" v-loading="loading">
+      <ComponentBar v-if="!loading"></ComponentBar>
+      <Container v-if="!loading" :items="items"></Container>
+      <Attributes v-if="!loading"></Attributes>
     </div>
   </div>
 </template>
@@ -15,6 +15,13 @@ import Container from '@/components/Container.vue'
 import ComponentBar from '@/components/ComponentBar.vue'
 import Header from '@/components/Header.vue'
 import { Options, Vue } from 'vue-class-component'
+import { getDefaultAttrs } from '@/utils/definition/DefaultAttributeFactory'
+import { getDescriptor } from '@/utils/definition/DescriptorFactory'
+import designer from '@/utils/designer'
+import { ComponentLevelEnum, ComponentTypeEnum } from '@/utils/enums'
+import { indexHandler } from '@/utils/index-hanlder'
+import { IComponentMetadata } from '@/utils/definition/Interfaces'
+import { reactive } from 'vue-demi'
 
 @Options({
   components: {
@@ -24,7 +31,66 @@ import { Options, Vue } from 'vue-class-component'
     Header
   }
 })
-export default class Home extends Vue {}
+export default class Home extends Vue {
+  loading = true
+  items!: IComponentMetadata[]
+  mounted() {
+    indexHandler.setCount(
+      ComponentTypeEnum.INPUT,
+      indexHandler.countConponentByType(ComponentTypeEnum.INPUT, this.items)
+    )
+    indexHandler.setCount(
+      ComponentTypeEnum.PANEL,
+      indexHandler.countConponentByType(ComponentTypeEnum.PANEL, this.items)
+    )
+    this.items = reactive([
+      {
+        uuid: 'panel_1',
+        type: ComponentTypeEnum.PANEL,
+        level: ComponentLevelEnum.LAYOUT,
+        attrs: getDefaultAttrs(ComponentTypeEnum.PANEL),
+        desc: getDescriptor(ComponentTypeEnum.PANEL),
+        children: [
+          {
+            uuid: 'panel_4',
+            type: ComponentTypeEnum.PANEL,
+            level: ComponentLevelEnum.LAYOUT,
+            attrs: getDefaultAttrs(ComponentTypeEnum.PANEL),
+            desc: getDescriptor(ComponentTypeEnum.PANEL),
+            children: []
+          }
+        ]
+      },
+      {
+        uuid: 'panel_2',
+        type: ComponentTypeEnum.PANEL,
+        level: ComponentLevelEnum.LAYOUT,
+        attrs: getDefaultAttrs(ComponentTypeEnum.PANEL),
+        desc: getDescriptor(ComponentTypeEnum.PANEL),
+        children: []
+      },
+      {
+        uuid: 'panel_3',
+        type: ComponentTypeEnum.PANEL,
+        level: ComponentLevelEnum.LAYOUT,
+        attrs: getDefaultAttrs(ComponentTypeEnum.PANEL),
+        desc: getDescriptor(ComponentTypeEnum.PANEL),
+        children: []
+      }
+    ])
+    const metadata = reactive({
+      uuid: 'page',
+      type: ComponentTypeEnum.PAGE,
+      attrs: getDefaultAttrs(ComponentTypeEnum.PAGE),
+      level: ComponentLevelEnum.LAYOUT,
+      desc: getDescriptor(ComponentTypeEnum.PAGE),
+      children: this.items,
+      events: []
+    })
+    designer.init({ componentMetadatas: [reactive(metadata)] })
+    this.loading = false
+  }
+}
 </script>
 
 <style lang="scss" scoped>

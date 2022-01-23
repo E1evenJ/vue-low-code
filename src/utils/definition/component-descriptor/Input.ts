@@ -21,7 +21,7 @@ import {
   KeydownE,
   KeyUpE
 } from '../EventDescreptor'
-import { IDescriptor } from './descriptor'
+import { IDescriptor } from './Descriptor'
 
 export class Input implements IDescriptor {
   tools: ToolType[]

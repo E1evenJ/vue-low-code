@@ -11,10 +11,10 @@
     :title="dialog.title"
     :width="dialog.width"
     :before-close="dialog.beforeClose"
+    @opened="dialog.open;opened(dialog)"
     @closed="dialog.closed"
   >
-    <template #title></template>
-    <component :is="dialog.dialogComponent" :data="dialog.data" />
+    <component ref="dialogComponent" :is="dialog.dialogComponent" :addtionalData="dialog.data" />
   </el-dialog>
 </template>
 
@@ -24,6 +24,13 @@ import { dialogProxy } from '@/utils/dialog'
 @Options({})
 export default class App extends Vue {
   dialogs = dialogProxy.dialogs
+  declare $refs: {
+    dialogComponent: any[]
+  }
+  opened(dialog: any) {
+    const index = this.dialogs.indexOf(dialog)
+    this.$refs.dialogComponent[index].dialogOpen && this.$refs.dialogComponent[index].dialogOpen()
+  }
 }
 </script>
 

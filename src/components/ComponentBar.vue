@@ -21,9 +21,9 @@
 
 <script lang="ts">
 import { ComponentLevelEnum, ComponentTypeEnum } from '@/utils/enums'
-import { componentTreeHandler } from '@/utils/render-tree'
 import { Options, Vue } from 'vue-class-component'
 import { VueDraggableNext } from 'vue-draggable-next'
+import { dragdropHandler } from '@/utils/dragdrop-handler'
 
 @Options({
   components: {
@@ -75,10 +75,10 @@ export default class ComponentBar extends Vue {
     this.dragElem = elem
     this.dragElemContext = event.draggedContext
     // this._addDragStyle(elem);
-    componentTreeHandler.setData(event.relatedContext)
+    dragdropHandler.setDragData(event.relatedContext)
   }
   end() {
-    componentTreeHandler.setData(null)
+    dragdropHandler.setDragData(null)
   }
 
   // private _addDragStyle(elem: HTMLElement) {

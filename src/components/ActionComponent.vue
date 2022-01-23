@@ -2,8 +2,8 @@
   <div class="action-component">
     <el-tree
       :data="eventsTree"
-      :props="{ value: 'eventName', label: 'label', children: 'children' }"
-      node-key="eventName"
+      :props="{ value: 'name', label: 'label', children: 'children' }"
+      node-key="name"
       ref="treeRef"
       @node-click="nodeClick"
     >
@@ -30,10 +30,10 @@
 <script lang="ts">
 import { IEventDescreptor } from '@/utils/definition/EventDescreptor'
 import { ActionTypeEnum } from '@/utils/enums'
-import { Action, Event, RenderTree } from '@/utils/render-tree'
 import { Options, Vue } from 'vue-class-component'
 import { ActionName } from '@/utils/const'
 import ActionTemplate from './ActionTemplate.vue'
+import { IAction, IComponentMetadata, IEvent } from '@/utils/definition/Interfaces'
 
 @Options({
   components: {
@@ -49,47 +49,46 @@ import ActionTemplate from './ActionTemplate.vue'
   }
 })
 export default class ActionComponent extends Vue {
-  eventsTree: Event[] = []
-  currentAction: Action | null = null
+  eventsTree: IEvent[] = []
+  currentAction: IAction | null = null
   treeRef: any = null
-  metadata!: RenderTree
+  metadata!: IComponentMetadata
   mounted() {
     this.init(this.metadata)
   }
 
-  init(metadata: RenderTree) {
+  init(metadata: IComponentMetadata) {
     metadata.events = metadata.events || []
-    this.eventsTree = metadata.desc.eventDescs.map<Event>((item: IEventDescreptor) => {
-      const event = this.metadata.events?.find(event => event.eventName === item.key)
+    this.eventsTree = metadata.desc.eventDescs.map<IEvent>((item: IEventDescreptor) => {
+      const event = this.metadata.events?.find(event => event.name === item.key)
       if (event) {
         event.isRoot = true
       }
-      return event || { eventName: item.key, label: item.value, isRoot: true, children: [] }
+      return event || { name: item.key, label: item.value, isRoot: true, children: [] }
     })
   }
 
-  add(node: Event) {
-    let event = this.eventsTree.find((event: Event) => event.eventName === node.eventName)
+  add(node: IEvent) {
+    let event = this.eventsTree.find((event: IEvent) => event.name === node.name)
     if (event) {
       const action = {
-        eventName: event?.eventName + event?.children?.length,
+        name: event?.name + event?.children?.length,
         label: ActionName[ActionTypeEnum.METHOD].name,
         actionType: ActionTypeEnum.METHOD,
         returnVal: false
       }
       event?.children?.push(action)
       this.currentAction = this.currentAction || action
-      this.metadata?.events?.indexOf(event as Event) === -1 && this.metadata?.events.push(event as Event)
-      console.log(this.eventsTree)
+      this.metadata?.events?.indexOf(event as IEvent) === -1 && this.metadata?.events.push(event as IEvent)
       event && event.children && this.treeRef.setCurrentKey(`click${event.children.length - 1}`)
     }
   }
 
-  nodeClick(data: Action) {
-    if (Reflect.getOwnPropertyDescriptor(data, 'actionType') !== undefined) this.currentAction = data as Action
+  nodeClick(data: IAction) {
+    if (Reflect.getOwnPropertyDescriptor(data, 'actionType') !== undefined) this.currentAction = data as IAction
   }
 
-  remove(node: any, data: Event) {
+  remove(node: any, data: IEvent) {
     const children = node.parent.data.children
     children.splice(children.indexOf(data), 1)
   }

@@ -54,7 +54,6 @@
         </div>
         <MonacoEditor
           language="typescript"
-          v-model="currentMethod.code"
           theme="vs-dark"
           :value="currentMethod.code"
           :options="options"
@@ -67,7 +66,6 @@
 
 <script lang="ts">
 import { randomName } from '@/utils/common'
-import { Method, ActionGroup, RenderTree, Action } from '@/utils/render-tree'
 import { Options, Vue } from 'vue-class-component'
 import { ActionTypeEnum } from '@/utils/enums'
 import { ActionName } from '@/utils/const'
@@ -76,43 +74,31 @@ import { reactive } from 'vue-demi'
 import { ref } from 'vue'
 
 import MonacoEditor from 'monaco-editor-vue3'
+import { IAction, IActionGroup, IMethod, IPageMetadata } from '@/utils/definition/Interfaces'
+import designer from '@/utils/designer'
 
 @Options({
   components: {
     MonacoEditor,
     ActionTemplate
-  },
-  props: {
-    metadata: Object
-  },
-  watch: {
-    metadata() {
-      this.init(this.metadata)
-    }
   }
 })
 export default class ActionMethod extends Vue {
-  metadata!: RenderTree
   methodsTree: any[] = []
-  currentActionGroup: ActionGroup | null = null
-  currentMethod: Method | null = null
-  currentAction: Action | null = null
+  currentActionGroup: IActionGroup | null = null
+  currentMethod: IMethod | null = null
+  currentAction: IAction | null = null
   editor: any
   options = {
     selectOnLineNumbers: false,
     key: ''
   }
 
-  mounted(): void {
-    this.init(this.metadata)
-  }
-
-  init(metadata: RenderTree) {
-    metadata.methodGroups = metadata.methodGroups || []
-    metadata.methods = metadata.methods || []
+  mounted() {
+    const pageMetadata = designer.pageMetadata
     this.methodsTree = [
-      { value: 'method_groups', label: '编排函数', isRoot: true, children: metadata.methodGroups },
-      { value: 'methods', label: '自定义函数', isRoot: true, children: metadata.methods }
+      { value: 'method_groups', label: '编排函数', isRoot: true, children: pageMetadata.methodGroups },
+      { value: 'methods', label: '自定义函数', isRoot: true, children: pageMetadata.methods }
     ]
   }
 
@@ -124,7 +110,7 @@ export default class ActionMethod extends Vue {
         memo: '',
         actions: [],
         children: []
-      } as ActionGroup
+      } as IActionGroup
       data.children.push(methodGroup)
       this.currentMethod = null
       this.currentAction = null
@@ -135,14 +121,14 @@ export default class ActionMethod extends Vue {
         name: methodName,
         code: ref(`export function ${methodName}() {\n\n}`),
         isSync: false
-      }) as Method
+      }) as IMethod
       data.children.push(method)
       this.currentActionGroup = null
       this.currentAction = null
       this.currentMethod = method
     } else if (data.isGroup) {
       const action = reactive({
-        eventName: 'actionGroup' + data.actions.length,
+        name: 'actionGroup' + data.actions.length,
         label: ActionName[ActionTypeEnum.METHOD].name,
         actionType: ActionTypeEnum.METHOD,
         returnVal: false
@@ -186,12 +172,12 @@ export default class ActionMethod extends Vue {
 
   saveMethodName() {
     if (this.currentMethod) {
-      let res = /(export async|export) function (.*?)\(\)/.exec(this.currentMethod.code)
+      const code = this.editor.getValue()
+      let res = /(export async|export) function (.*?)\(\)/.exec(code)
       const methodName = res && res[2]
       this.currentMethod.name = methodName as string
-      this.currentMethod.code = this.editor.getValue()
+      this.currentMethod.code = code
       res = /export async function/.exec(this.currentMethod.code)
-      console.log(res)
       this.currentMethod.isSync = res !== null
     }
   }

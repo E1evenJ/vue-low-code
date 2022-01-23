@@ -50,3 +50,9 @@ export enum RenderTypeEnum {
   CHECKBOX,
   BUTTON_GROUP
 }
+
+export enum DataTypeEnum {
+  String,
+  Number,
+  Array
+}

@@ -1,4 +1,4 @@
-import { componentTreeHandler } from '@/utils/render-tree'
+import designer from '@/utils/designer'
 import { Vue } from 'vue-class-component'
 
 function getParentByuuid(el: HTMLElement | null): any {
@@ -17,7 +17,7 @@ function focus(event: Event) {
     uuid = elem.getAttribute('uuid')
   }
   elem.classList.add('design-selected')
-  componentTreeHandler.setSelectedComponent(elem, uuid)
+  designer.treeHandler.setSelectedComponent(elem, uuid)
 }
 
 export default class Base extends Vue {

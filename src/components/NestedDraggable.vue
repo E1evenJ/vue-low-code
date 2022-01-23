@@ -28,7 +28,7 @@ import Panel from './draw-items/Panel.vue'
 import Page from './draw-items/Page.vue'
 import Input from './draw-items/Input.vue'
 import { VueDraggableNext } from 'vue-draggable-next'
-import { componentTreeHandler } from '@/utils/render-tree'
+import designer from '@/utils/designer'
 
 @Options({
   name: 'nested-draggable',
@@ -47,7 +47,7 @@ import { componentTreeHandler } from '@/utils/render-tree'
 })
 export default class Container extends Vue {
   add(evt: any) {
-    componentTreeHandler.add(evt.newIndex)
+    designer.treeHandler.add(evt.newIndex)
   }
 }
 </script>

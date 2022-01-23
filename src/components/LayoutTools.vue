@@ -11,21 +11,22 @@
 <script lang="ts">
 import { dialogProxy } from '@/utils/dialog'
 import { ToolType } from '@/utils/enums'
-import { componentTreeHandler, RenderTree } from '@/utils/render-tree'
 import { Options, Vue } from 'vue-class-component'
 import ActionDialog from './ActionDialog.vue'
+import { IComponentMetadata } from '@/utils/definition/Interfaces'
+import designer from '@/utils/designer'
 
 @Options({
   components: {}
 })
 export default class LayoutTools extends Vue {
   position = {} as any
-  metadata: RenderTree | null = null
+  metadata: IComponentMetadata | null = null
   el: HTMLElement | null = null
   Tools = ToolType
   dialog: any
   mounted() {
-    componentTreeHandler.onSelectedComponentChange((metadata: RenderTree | null, el: HTMLElement | null) => {
+    designer.treeHandler.onSelectedComponentChange((metadata: IComponentMetadata | null, el: HTMLElement | null) => {
       this.metadata = metadata
       this.el = el
       if (el) {
@@ -41,10 +42,10 @@ export default class LayoutTools extends Vue {
     })
   }
   copy() {
-    this.metadata && componentTreeHandler.copy(this.metadata)
+    this.metadata && designer.treeHandler.copy(this.metadata)
   }
   remove() {
-    this.metadata && componentTreeHandler.remove(this.metadata)
+    this.metadata && designer.treeHandler.remove(this.metadata)
   }
   setting() {
     if (this.dialog) {
@@ -62,7 +63,7 @@ export default class LayoutTools extends Vue {
         //   console.log('closed')
         //   dialogProxy.destroy(this.dialog)
         // }
-      })
+      }, true)
     }
   }
 }

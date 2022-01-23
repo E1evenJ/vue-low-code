@@ -1,18 +1,19 @@
 <script lang="ts">
-import { componentTreeHandler, RenderTree } from '@/utils/render-tree'
 import { Options, Vue } from 'vue-class-component'
 import { h, resolveComponent } from 'vue'
 import { IAttributeDescreptor } from '@/utils/definition/AttributeDescreptor'
 import { RenderTypeEnum } from '@/utils/enums'
+import { IComponentMetadata } from '@/utils/definition/Interfaces'
+import designer from '@/utils/designer'
 
 @Options({
   components: {}
 })
 export default class AttrsConfig extends Vue {
-  componentMetaData: RenderTree | undefined = {} as RenderTree
+  componentMetaData: IComponentMetadata | undefined = {} as IComponentMetadata
   RenderTypeEnum = RenderTypeEnum
   mounted() {
-    componentTreeHandler.onSelectedComponentChange((item: any) => {
+    designer.treeHandler.onSelectedComponentChange((item: any) => {
       this.componentMetaData = item
     })
   }

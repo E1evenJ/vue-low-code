@@ -13,7 +13,7 @@
 
 <script lang="ts">
 import { ActionName, ActionTypeConst } from '@/utils/const'
-import { Action } from '@/utils/render-tree'
+import { IAction } from '@/utils/definition/Interfaces'
 import { Options, Vue } from 'vue-class-component'
 
 @Options({
@@ -22,7 +22,7 @@ import { Options, Vue } from 'vue-class-component'
   }
 })
 export default class ActionTemplate extends Vue {
-  action!: Action
+  action!: IAction
   ActionTypeConst = ActionTypeConst
 
   changeActionType() {

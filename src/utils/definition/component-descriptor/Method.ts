@@ -1,3 +1,3 @@
-export class Method {
+export class IMethod {
 
 }
