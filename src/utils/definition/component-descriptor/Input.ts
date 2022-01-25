@@ -8,7 +8,8 @@ import {
   TextClear,
   TextClearBlank,
   TextPlaceholder,
-  Span
+  Span,
+  ModelField
 } from '../AttributeDescreptor'
 import {
   IEventDescreptor,
@@ -31,6 +32,7 @@ export class Input implements IDescriptor {
     this.attrDescs = [
       new Uuid(),
       new InputType(),
+      new ModelField(),
       new TextPlaceholder(),
       new TextClear(),
       new TextClearBlank(),

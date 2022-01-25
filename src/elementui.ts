@@ -1,7 +1,6 @@
 // 导入自己需要的组件
 import {
   ElButton,
-  ElSelectV2,
   ElInput,
   ElTree,
   ElDialog,
@@ -25,7 +24,12 @@ import {
   ElTable,
   ElTableColumn,
   ElCollapse,
-  ElCollapseItem
+  ElCollapseItem,
+  ElCascader,
+  ElTag,
+  ElDescriptions,
+  ElDescriptionsItem,
+  ElMessage
 } from 'element-plus'
 import 'element-plus/es/components/base/style/css'
 import 'element-plus/es/components/button/style/css'
@@ -52,14 +56,17 @@ import 'element-plus/es/components/table/style/css'
 import 'element-plus/es/components/table-column/style/css'
 import 'element-plus/es/components/collapse/style/css'
 import 'element-plus/es/components/collapse-item/style/css'
+import 'element-plus/es/components/cascader/style/css'
+import 'element-plus/es/components/tag/style/css'
+import 'element-plus/es/components/descriptions/style/css'
+import 'element-plus/es/components/descriptions-item/style/css'
+import 'element-plus/es/components/message/style/css'
 
 const element = {
   install: function (vue: { use: (item: any) => void }): void {
     vue.use(ElButton)
-    vue.use(ElSelectV2)
     vue.use(ElInput)
     vue.use(ElTree)
-    vue.use(ElDialog)
     vue.use(ElDialog)
     vue.use(ElRow)
     vue.use(ElCol)
@@ -82,6 +89,11 @@ const element = {
     vue.use(ElTableColumn)
     vue.use(ElCollapse)
     vue.use(ElCollapseItem)
+    vue.use(ElCascader)
+    vue.use(ElTag)
+    vue.use(ElDescriptions)
+    vue.use(ElDescriptionsItem)
+    vue.use(ElMessage)
   }
 }
 export default element

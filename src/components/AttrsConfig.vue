@@ -104,6 +104,36 @@ export default class AttrsConfig extends Vue {
         )
         break
       }
+      case RenderTypeEnum.CASCADER_MODEL: {
+        const props = designer.pageMetadata.props
+        const data = designer.pageMetadata.data
+        const options = []
+        props.length > 0 && options.push({ name: 'params', children: props })
+        data.length > 0 && options.push({ name: 'data', children: data })
+        attrComponent = h(
+          resolveComponent('el-cascader') as any,
+          {
+            class: 'attr-right',
+            ...this.bindModel(attrs, modelFiledName),
+            options,
+            props: { value: 'name', label: 'name', children: 'children', emitPath: false },
+            'show-all-levels': false,
+            clearable: true
+          },
+          {
+            default: ({ node, data }: any) => {
+              return [
+                `${data.name}${data.memo !== '' && data.memo !== undefined ? '(' + data.memo + ')' : ''}`,
+                h(resolveComponent('el-icon'), {}, () => [
+                  h(resolveComponent('circle-plus'), { style: { 'margin-left': '5px' } })
+                ])
+              ]
+            },
+            empty: ({ node, data }: any) => [h('span', {}, ['没有数据'])]
+          }
+        )
+        break
+      }
     }
     return h('div', { class: 'attr-item' }, [h('span', { class: 'label' }, attrDesc.value), attrComponent])
   }

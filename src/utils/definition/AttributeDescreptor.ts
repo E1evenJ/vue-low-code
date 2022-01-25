@@ -25,7 +25,7 @@ export class Span implements IAttributeDescreptor {
 export class ModelField implements IAttributeDescreptor {
   value = '模型字段'
   desc = '绑定数据模型字段(v-model)'
-  RenderTypeEnum = RenderTypeEnum.DROPDOWN
+  RenderTypeEnum = RenderTypeEnum.CASCADER_MODEL
 }
 
 export class InputType implements IAttributeDescreptor {

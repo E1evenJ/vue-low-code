@@ -48,11 +48,21 @@ export enum RenderTypeEnum {
   NUMBER,
   SLIDER,
   CHECKBOX,
-  BUTTON_GROUP
+  BUTTON_GROUP,
+  CASCADER_MODEL
 }
 
 export enum DataTypeEnum {
-  String,
-  Number,
-  Array
+  STRING = 'STRING',
+  NUMBER = 'NUMBER',
+  ARRAY = 'ARRAY',
+  OBJECT = 'OBJECT'
+}
+
+export enum MethodEnum {
+  GET = 'GET',
+  POST = 'POST',
+  PUT = 'PUT',
+  DELETE = 'DELETE',
+  REMOVE = 'REMOVE'
 }

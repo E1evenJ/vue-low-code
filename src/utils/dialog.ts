@@ -16,7 +16,7 @@ class DialogProxy {
     return this._dialogs
   }
   open(dialogComponent: Component, option: DialogOption, keep = false) {
-    let dialog = this._dialogs.find((d: { name: string }) => d.name === dialogComponent.name)
+    let dialog = this._dialogs.find((d: { dialogComponent: any }) => d.dialogComponent.name === dialogComponent.name)
     if (dialog && keep) {
       Object.assign(dialog, option)
       dialog.visible = true

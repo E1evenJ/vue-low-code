@@ -1,4 +1,4 @@
-import { ActionTypeEnum, ComponentLevelEnum, ComponentTypeEnum, DataTypeEnum, StoreTypeEnum } from '../enums'
+import { ActionTypeEnum, ComponentLevelEnum, ComponentTypeEnum, DataTypeEnum, MethodEnum, StoreTypeEnum } from '../enums'
 import { IDescriptor } from './component-descriptor/Descriptor'
 
 export interface IEvent {
@@ -51,8 +51,9 @@ export interface IPageMetadata {
   watches: IWatch[]
   methods: IMethod[]
   methodGroups: IActionGroup[]
-  props: Prop[]
-  data: Data[]
+  props: IProp[]
+  data: IData[]
+  apis: IApi[]
 }
 
 export interface ILifecycle {
@@ -67,12 +68,53 @@ export interface IWatch {
   actions: IAction[]
 }
 
-export interface Prop {
+export interface IProp {
+  id: string
   name: string
   dataType: DataTypeEnum
+  children?: IProp[]
+  memo?: string
+  isNew?: boolean
 }
 
-export interface Data {
+export interface IData {
+  id: string
   name: string
   dataType: DataTypeEnum
+  children?: IData[]
+  memo?: string
+  isNew?: boolean
+}
+
+export interface IApi {
+  id: string
+  url: string
+  memo: string
+  method: MethodEnum
+  request?: IApiTransformData
+  response?: IApiTransformData
+}
+
+export interface IApiTransformData {
+  name: string
+  data: IApiData[]
+}
+
+export interface IApiData {
+  id: string
+  name: string
+  memo: string
+  dataType: DataTypeEnum
+  children?: IApiData[]
+  isNew?: boolean
+}
+
+export interface IServiceCategory {
+  memo: string
+  children: IService[]
+}
+
+export interface IService {
+  memo: string
+  children: IApi[]
 }

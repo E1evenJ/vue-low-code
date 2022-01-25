@@ -30,7 +30,7 @@ export default class Header extends Vue {
   }
 
   save() {
-    console.log(designer)
+    localStorage.setItem('designer', designer.toString())
   }
 }
 </script>

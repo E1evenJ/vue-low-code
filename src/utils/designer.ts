@@ -1,8 +1,10 @@
 import { reactive } from 'vue'
+import { uuid } from './common'
 import { ComponentTree } from './component-tree'
 import { IComponentMetadata, ILifecycle, IPageMetadata } from './definition/Interfaces'
+import { DataTypeEnum, MethodEnum } from './enums'
 
-class Designer extends Object{
+class Designer extends Object {
   pageMetadata!: IPageMetadata
   componentMetadatas!: IComponentMetadata[]
   treeHandler!: ComponentTree
@@ -15,12 +17,15 @@ class Designer extends Object{
       methods: [],
       methodGroups: [],
       props: [],
-      data: []
-    })
+      data: [],
+      apis: []
+    } as IPageMetadata)
     pageMetadata && Object.assign(this.pageMetadata, pageMetadata)
     this.componentMetadatas = componentMetadatas || []
     this.treeHandler = new ComponentTree(this.componentMetadatas)
   }
+
+  
 
   private initLifeCycle(): ILifecycle[] {
     return [

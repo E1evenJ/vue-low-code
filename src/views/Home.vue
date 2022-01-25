@@ -43,51 +43,26 @@ export default class Home extends Vue {
       ComponentTypeEnum.PANEL,
       indexHandler.countConponentByType(ComponentTypeEnum.PANEL, this.items)
     )
-    this.items = reactive([
-      {
-        uuid: 'panel_1',
-        type: ComponentTypeEnum.PANEL,
-        level: ComponentLevelEnum.LAYOUT,
-        attrs: getDefaultAttrs(ComponentTypeEnum.PANEL),
-        desc: getDescriptor(ComponentTypeEnum.PANEL),
-        children: [
-          {
-            uuid: 'panel_4',
-            type: ComponentTypeEnum.PANEL,
-            level: ComponentLevelEnum.LAYOUT,
-            attrs: getDefaultAttrs(ComponentTypeEnum.PANEL),
-            desc: getDescriptor(ComponentTypeEnum.PANEL),
-            children: []
-          }
-        ]
-      },
-      {
-        uuid: 'panel_2',
-        type: ComponentTypeEnum.PANEL,
-        level: ComponentLevelEnum.LAYOUT,
-        attrs: getDefaultAttrs(ComponentTypeEnum.PANEL),
-        desc: getDescriptor(ComponentTypeEnum.PANEL),
-        children: []
-      },
-      {
-        uuid: 'panel_3',
-        type: ComponentTypeEnum.PANEL,
-        level: ComponentLevelEnum.LAYOUT,
-        attrs: getDefaultAttrs(ComponentTypeEnum.PANEL),
-        desc: getDescriptor(ComponentTypeEnum.PANEL),
-        children: []
+    const designerStr = localStorage.getItem('designer')
+    if (designerStr) {
+      const designerObj = JSON.parse(designerStr) as any
+      if (designerObj) {
+        designer.init(designerObj as any)
+        this.items = reactive(designerObj.componentMetadatas[0].children)
       }
-    ])
-    const metadata = reactive({
-      uuid: 'page',
-      type: ComponentTypeEnum.PAGE,
-      attrs: getDefaultAttrs(ComponentTypeEnum.PAGE),
-      level: ComponentLevelEnum.LAYOUT,
-      desc: getDescriptor(ComponentTypeEnum.PAGE),
-      children: this.items,
-      events: []
-    })
-    designer.init({ componentMetadatas: [reactive(metadata)] })
+    } else {
+      const metadata = reactive({
+        uuid: 'page',
+        type: ComponentTypeEnum.PAGE,
+        attrs: getDefaultAttrs(ComponentTypeEnum.PAGE),
+        level: ComponentLevelEnum.LAYOUT,
+        desc: getDescriptor(ComponentTypeEnum.PAGE),
+        children: this.items,
+        events: []
+      })
+      designer.init({ componentMetadatas: [metadata] })
+      this.items = metadata.children
+    }
     this.loading = false
   }
 }

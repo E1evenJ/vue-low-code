@@ -12,18 +12,23 @@
     <el-tab-pane label="数据行为配置" name="ActionData">
       <ActionData></ActionData>
     </el-tab-pane>
+    <el-tab-pane label="接口行为配置" name="ActionApi">
+      <ActionApi></ActionApi>
+    </el-tab-pane>
   </el-tabs>
 </template>
 
 <script lang="ts">
 import { IComponentMetadata } from '@/utils/definition/Interfaces'
 import { Options, Vue } from 'vue-class-component'
+import ActionApi from './ActionApi.vue'
 import ActionComponent from './ActionComponent.vue'
 import ActionData from './ActionData.vue'
 import ActionMethod from './ActionMethod.vue'
 import ActionPage from './ActionPage.vue'
 
 @Options({
+  name: 'ActionDialog',
   props: {
     addtionalData: Object
   },
@@ -31,7 +36,14 @@ import ActionPage from './ActionPage.vue'
     ActionComponent,
     ActionMethod,
     ActionPage,
-    ActionData
+    ActionData,
+    ActionApi
+  },
+  watch: {
+    addtionalData(data: IComponentMetadata) {
+      this.activeName === 'ActionComponent' && (this.activeName = 'ActionMethod')
+      this.activeName = this.addtionalData ? 'ActionComponent' : this.activeName
+    }
   }
 })
 export default class ActionDialog extends Vue {
@@ -40,25 +52,11 @@ export default class ActionDialog extends Vue {
   beforeCreate() {
     this.activeName = this.addtionalData ? 'ActionComponent' : 'ActionMethod'
   }
-  dialogOpen() {
-    this.activeName === 'ActionComponent' && (this.activeName = 'ActionMethod')
-    this.activeName = this.addtionalData ? 'ActionComponent' : this.activeName
-  }
 }
 </script>
 
 <style lang="scss">
 .el-dialog {
-  .el-dialog__header {
-    padding: 0;
-    .el-dialog__headerbtn {
-      z-index: 10;
-    }
-  }
-  .el-dialog__body {
-    padding-top: 10px;
-    padding-bottom: 20px;
-  }
   .el-tree {
     height: 65vh;
     overflow-y: auto;

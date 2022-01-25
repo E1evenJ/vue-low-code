@@ -7,11 +7,14 @@
   <el-dialog
     v-for="dialog in dialogs"
     :key="dialog.uuid"
+    :custom-class="
+      'custom-dialog ' + (dialog.title === undefined || dialog.title === '' || dialog.title === null ? 'no-header' : '')
+    "
     v-model="dialog.visible"
     :title="dialog.title"
     :width="dialog.width"
     :before-close="dialog.beforeClose"
-    @opened="dialog.open;opened(dialog)"
+    @opened="opened(dialog)"
     @closed="dialog.closed"
   >
     <component ref="dialogComponent" :is="dialog.dialogComponent" :addtionalData="dialog.data" />
@@ -114,7 +117,7 @@ body {
     width: 100px;
   }
   .attr-right {
-    width: calc(100% - 110px);
+    width: 214px;
   }
 }
 ::-webkit-scrollbar {
@@ -131,5 +134,22 @@ body {
   /*滚动条里面轨道*/
   // box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
   background: #ededed;
+}
+.custom-dialog {
+  .el-dialog__header {
+    text-align: left;
+  }
+  &.no-header {
+    .el-dialog__header {
+      padding: 0;
+    }
+    .el-dialog__headerbtn {
+      z-index: 10;
+    }
+  }
+  .el-dialog__body {
+    padding-top: 10px;
+    padding-bottom: 20px;
+  }
 }
 </style>
