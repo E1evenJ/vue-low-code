@@ -25,8 +25,6 @@ class Designer extends Object {
     this.treeHandler = new ComponentTree(this.componentMetadatas)
   }
 
-  
-
   private initLifeCycle(): ILifecycle[] {
     return [
       { name: 'beforeCreate', label: '创建之前(beforeCreate)', actions: [] },

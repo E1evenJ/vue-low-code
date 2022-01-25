@@ -1,11 +1,9 @@
 import { IComponentMetadata } from './definition/Interfaces'
+import designer from './designer'
 import { ComponentTypeEnum } from './enums'
 
 class IndexHandler {
   private _indexSet: Map<ComponentTypeEnum, number> = new Map()
-  setCount(type: ComponentTypeEnum, count: number): void {
-    this._indexSet.set(type, count)
-  }
 
   getCount(type: ComponentTypeEnum): number {
     return this._indexSet.get(type) || 0
@@ -15,7 +13,7 @@ class IndexHandler {
     if (this._indexSet.get(type) === undefined) {
       this._indexSet.set(type, 0)
     }
-    const count = (this._indexSet.get(type) || 0) + 1
+    const count = this.countConponentByType(type, designer.componentMetadatas) + 1
     this._indexSet.set(type, count)
     return count
   }

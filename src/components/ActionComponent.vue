@@ -13,7 +13,7 @@
           <el-icon v-if="data.isRoot" @click.stop="add(data)" color="#409eff" size="16" style="margin-left: 10px">
             <circle-plus />
           </el-icon>
-          <el-icon v-else @click.stop="remove(node, data)" color="red" size="16" style="margin-left: 10px">
+          <el-icon v-else @click.stop="remove(node, data)" color="#F56C6C" size="16" style="margin-left: 10px">
             <delete />
           </el-icon>
         </div>
@@ -34,6 +34,7 @@ import { Options, Vue } from 'vue-class-component'
 import { ActionName } from '@/utils/const'
 import ActionTemplate from './ActionTemplate.vue'
 import { IAction, IComponentMetadata, IEvent } from '@/utils/definition/Interfaces'
+import { getDescriptor } from '@/utils/definition/DescriptorFactory'
 
 @Options({
   components: {
@@ -59,7 +60,8 @@ export default class ActionComponent extends Vue {
 
   init(metadata: IComponentMetadata) {
     metadata.events = metadata.events || []
-    this.eventsTree = metadata.desc.eventDescs.map<IEvent>((item: IEventDescreptor) => {
+    const desc = getDescriptor(metadata.type)
+    this.eventsTree = desc.eventDescs.map<IEvent>((item: IEventDescreptor) => {
       const event = this.metadata.events?.find(event => event.name === item.key)
       if (event) {
         event.isRoot = true

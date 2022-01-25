@@ -27,7 +27,7 @@ export default class Panel extends Base {}
   flex-direction: row;
   position: relative;
   // &:hover {
-  //   border-color: rgba($color: #409eff, $alpha: 0.6);
+  //   border-color: rgba($color: var(--el-color-primary), $alpha: 0.6);
   // }
 }
 </style>

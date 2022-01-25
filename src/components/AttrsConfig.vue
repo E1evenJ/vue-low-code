@@ -5,6 +5,7 @@ import { IAttributeDescreptor } from '@/utils/definition/AttributeDescreptor'
 import { RenderTypeEnum } from '@/utils/enums'
 import { IComponentMetadata } from '@/utils/definition/Interfaces'
 import designer from '@/utils/designer'
+import { getDescriptor } from '@/utils/definition/DescriptorFactory'
 
 @Options({
   components: {}
@@ -20,10 +21,11 @@ export default class AttrsConfig extends Vue {
   render() {
     if (this.componentMetaData && this.componentMetaData.type) {
       const componentMetaData = this.componentMetaData
+      const desc = getDescriptor(componentMetaData.type)
       return h(
         'div',
         {},
-        componentMetaData.desc.attrDescs.map((attrDesc: IAttributeDescreptor) => {
+        desc.attrDescs.map((attrDesc: IAttributeDescreptor) => {
           componentMetaData.attrs.uuid = componentMetaData.uuid
           return this.renderAttrItem(attrDesc, componentMetaData.attrs)
         })

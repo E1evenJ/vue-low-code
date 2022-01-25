@@ -1,11 +1,11 @@
 <template>
-  <div class="layout-tools" :style="position">
-    <el-icon v-show="metadata?.desc.tools.includes(Tools.SETTING)" @click.stop="setting"><setting /></el-icon>
-    <el-icon v-show="metadata?.desc.tools.includes(Tools.DELETE)" @click.stop="remove" style="color: red"
-      ><delete
-    /></el-icon>
-    <el-icon v-show="metadata?.desc.tools.includes(Tools.COPY)" @click.stop="copy"><document-copy /></el-icon>
-  </div>
+  <teleport to=".design-selected" v-if="showTools">
+    <div class="layout-tools">
+      <el-icon v-show="desc?.tools.includes(Tools.SETTING)" @click.stop="setting"><setting /></el-icon>
+      <el-icon v-show="desc?.tools.includes(Tools.DELETE)" @click.stop="remove"><delete /></el-icon>
+      <el-icon v-show="desc?.tools.includes(Tools.COPY)" @click.stop="copy"><document-copy /></el-icon>
+    </div>
+  </teleport>
 </template>
 
 <script lang="ts">
@@ -15,30 +15,38 @@ import { Options, Vue } from 'vue-class-component'
 import ActionDialog from './ActionDialog.vue'
 import { IComponentMetadata } from '@/utils/definition/Interfaces'
 import designer from '@/utils/designer'
+import { getDescriptor } from '@/utils/definition/DescriptorFactory'
+import { IDescriptor } from '@/utils/definition/component-descriptor/Descriptor'
 
 @Options({
   components: {}
 })
 export default class LayoutTools extends Vue {
-  position = {} as any
   metadata: IComponentMetadata | null = null
   el: HTMLElement | null = null
   Tools = ToolType
   dialog: any
+  desc: IDescriptor | null = null
+  showTools = false
   mounted() {
     designer.treeHandler.onSelectedComponentChange((metadata: IComponentMetadata | null, el: HTMLElement | null) => {
+      this.showTools = false
       this.metadata = metadata
+      if (metadata) this.desc = getDescriptor(metadata.type)
       this.el = el
-      if (el) {
-        const { left, top, width } = el.getBoundingClientRect()
-        this.position = {
-          right: `${document.body.clientWidth - left - width + 5}px`,
-          top: `${top - 10}px`,
-          display: 'block'
-        }
-      } else {
-        this.position = { display: 'none' }
-      }
+      // if (el) {
+      //   const { left, top, width } = el.getBoundingClientRect()
+      //   this.position = {
+      //     right: `${document.body.clientWidth - left - width + 5}px`,
+      //     top: `${top - 10}px`,
+      //     display: 'block'
+      //   }
+      // } else {
+      //   this.position = { display: 'none' }
+      // }
+      this.$nextTick(() => {
+        this.showTools = true
+      })
     })
   }
   copy() {
@@ -52,18 +60,22 @@ export default class LayoutTools extends Vue {
       this.dialog.visible = true
       this.dialog.data = this.metadata
     } else {
-      this.dialog = dialogProxy.open(ActionDialog, {
-        title: '',
-        data: this.metadata
-        // beforeClose: (done: () => void) => {
-        //   console.log('beforeClose')
-        //   done()
-        // },
-        // closed: () => {
-        //   console.log('closed')
-        //   dialogProxy.destroy(this.dialog)
-        // }
-      }, true)
+      this.dialog = dialogProxy.open(
+        ActionDialog,
+        {
+          title: '',
+          data: this.metadata
+          // beforeClose: (done: () => void) => {
+          //   console.log('beforeClose')
+          //   done()
+          // },
+          // closed: () => {
+          //   console.log('closed')
+          //   dialogProxy.destroy(this.dialog)
+          // }
+        },
+        true
+      )
     }
   }
 }
@@ -74,16 +86,22 @@ export default class LayoutTools extends Vue {
   position: absolute;
   text-align: right;
   z-index: 1000;
-  display: none;
+  top: -10px;
+  right: 0;
   i {
-    padding: 3px;
-    margin: 0 3px 0 0;
-    background: #fff;
-    color: #409eff;
-    border-radius: 50%;
-    border: 1px solid #409eff;
-    font-size: 12px;
+    line-height: 24px;
     cursor: pointer;
+    color: rgb(189, 189, 189);
+    margin-right: 4px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 4px 2px;
+    border-radius: 50%;
+    font-size: 12px;
+    padding: 3px;
+    border: 1px solid;
+    &:hover {
+      color: var(--el-color-primary);
+    }
   }
 }
 </style>

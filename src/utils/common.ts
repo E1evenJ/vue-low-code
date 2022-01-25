@@ -25,3 +25,22 @@ export function uuid() {
     return v.toString(16)
   })
 }
+
+export function cloneDeep(obj: any) {
+  // 创建一个新对象
+  const result: { [index: string]: any } = {}
+  let temp = null
+  let key = null
+  const keys = Object.keys(obj)
+  keys.map((item, index) => {
+    key = item
+    temp = obj[key]
+    // 如果字段的值也是一个对象则递归操作
+    if (temp && typeof temp === 'object') {
+      result[key] = cloneDeep(temp)
+    } else {
+      result[key] = temp
+    }
+  })
+  return result
+}

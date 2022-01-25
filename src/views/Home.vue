@@ -35,19 +35,11 @@ export default class Home extends Vue {
   loading = true
   items!: IComponentMetadata[]
   mounted() {
-    indexHandler.setCount(
-      ComponentTypeEnum.INPUT,
-      indexHandler.countConponentByType(ComponentTypeEnum.INPUT, this.items)
-    )
-    indexHandler.setCount(
-      ComponentTypeEnum.PANEL,
-      indexHandler.countConponentByType(ComponentTypeEnum.PANEL, this.items)
-    )
     const designerStr = localStorage.getItem('designer')
     if (designerStr) {
       const designerObj = JSON.parse(designerStr) as any
       if (designerObj) {
-        designer.init(designerObj as any)
+        designer.init(reactive(designerObj as any))
         this.items = reactive(designerObj.componentMetadatas[0].children)
       }
     } else {
@@ -57,7 +49,7 @@ export default class Home extends Vue {
         attrs: getDefaultAttrs(ComponentTypeEnum.PAGE),
         level: ComponentLevelEnum.LAYOUT,
         desc: getDescriptor(ComponentTypeEnum.PAGE),
-        children: this.items,
+        children: [],
         events: []
       })
       designer.init({ componentMetadatas: [metadata] })

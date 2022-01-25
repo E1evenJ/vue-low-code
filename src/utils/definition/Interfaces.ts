@@ -1,4 +1,11 @@
-import { ActionTypeEnum, ComponentLevelEnum, ComponentTypeEnum, DataTypeEnum, MethodEnum, StoreTypeEnum } from '../enums'
+import {
+  ActionTypeEnum,
+  ComponentLevelEnum,
+  ComponentTypeEnum,
+  DataTypeEnum,
+  MethodEnum,
+  StoreTypeEnum
+} from '../enums'
 import { IDescriptor } from './component-descriptor/Descriptor'
 
 export interface IEvent {
@@ -42,7 +49,6 @@ export interface IComponentMetadata {
     [index: string]: any
   }
   events?: IEvent[]
-  desc: IDescriptor
   children: IComponentMetadata[]
 }
 

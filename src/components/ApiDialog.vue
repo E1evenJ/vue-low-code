@@ -83,6 +83,10 @@ export default class ApiDialog extends Vue {
       const isExist = designer.pageMetadata.apis.find(item => item.id === this.currentApi?.id)
       if (!isExist) {
         designer.pageMetadata.apis.push(this.currentApi)
+        ElMessage({
+          message: '选中Api订阅成功.',
+          type: 'success'
+        })
       } else {
         ElMessage({
           message: '选中Api已经订阅.',

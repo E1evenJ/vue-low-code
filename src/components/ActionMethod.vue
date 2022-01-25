@@ -12,7 +12,7 @@
           <el-icon
             v-if="data.isRoot || data.isGroup"
             @click.stop="add(data)"
-            color="#409eff"
+            color="#409EFF"
             size="16"
             style="margin-left: 10px"
           >

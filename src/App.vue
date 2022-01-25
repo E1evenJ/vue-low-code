@@ -43,7 +43,8 @@ body {
   margin: 0;
 }
 .design-selected {
-  outline-color: rgba($color: #409eff, $alpha: 0.6) !important;
+  outline-style: solid;
+  outline-color: var(--el-color-primary-light-3) !important;
 }
 [uuid]:not(.el-input):not(.el-select):not(.el-cascader).design-selected:not(i):before {
   height: auto !important;
@@ -62,16 +63,16 @@ body {
   width: auto;
 }
 .el-col + .ghost-class {
-  margin-top: 7.5px;
+  margin-top: 10px;
 }
 .ghost-class + .el-col {
-  margin-top: 7.5px;
+  margin-top: 10px;
 }
 .ghost-class {
   width: 100%;
-  height: 50px;
-  border: 1px dashed rgba($color: #409eff, $alpha: 0.6);
-  background-color: rgba($color: #409eff, $alpha: 0.3);
+  height: 30px;
+  outline: 1px solid var(--el-color-primary-light-3); //rgba($color: var(--el-color-primary), $alpha: 0.6);
+  background-color: var(--el-color-primary-light-6);
   * {
     display: none;
   }
@@ -80,8 +81,8 @@ body {
   }
 }
 .dragged-item {
-  outline: 1px dashed rgba($color: #409eff, $alpha: 0.6);
-  background-color: rgba($color: #409eff, $alpha: 0.3);
+  outline: 1px solid var(--el-color-primary-light-3); //rgba($color: var(--el-color-primary), $alpha: 0.6);
+  background-color: var(--el-color-primary-light-6);
   height: 30;
 }
 #app {

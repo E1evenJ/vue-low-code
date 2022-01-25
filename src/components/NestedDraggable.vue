@@ -6,7 +6,8 @@
     :sort="true"
     :group="{ name: 'g1' }"
     handle=".drag-box"
-    animation="250"
+    animation="150"
+    dragClass="ghost-class"
     ghost-class="ghost-class"
     @add="add"
   >
@@ -60,10 +61,10 @@ export default class Container extends Vue {
 }
 .drag-box {
   width: calc(100% - 15px);
-  margin: 7.5px;
+  margin: 10px;
   align-content: center;
 }
 .el-col + .el-col {
-  margin-top: 7.5px;
+  margin-top: 10px;
 }
 </style>

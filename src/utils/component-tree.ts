@@ -1,7 +1,8 @@
 // import { resolveComponent, TransitionGroup, h, ConcreteComponent } from 'vue';
 // import { VueDraggableNext } from 'vue-draggable-next';
 
-import { reactive } from 'vue'
+import { isReactive, reactive } from 'vue'
+import { cloneDeep } from './common'
 import { getDefaultAttrs } from './definition/DefaultAttributeFactory'
 import { getDescriptor } from './definition/DescriptorFactory'
 import { IComponentMetadata } from './definition/Interfaces'
@@ -71,9 +72,9 @@ export class ComponentTree {
       type: pageMetadata.type,
       level: pageMetadata.level,
       attrs: {
+        ...cloneDeep(pageMetadata.attrs),
         span: [ComponentLevelEnum.LAYOUT].includes(pageMetadata.level) ? 24 : 6
       },
-      desc: getDescriptor(pageMetadata.type),
       children: []
     })
     this._splice(pageMetadata, newMetaData)
@@ -99,6 +100,7 @@ export class ComponentTree {
       if (newMetadata) children?.splice(index + 1, 0, newMetadata)
       else children?.splice(index, 1)
     }
+    console.log(isReactive(children))
   }
 
   remove(pageMetadata: IComponentMetadata) {
