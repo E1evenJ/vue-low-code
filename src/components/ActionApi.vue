@@ -1,7 +1,7 @@
 <template>
   <div class="action-api">
     <div class="api">
-      <span>已订阅Api：</span>
+      <span class="api-label">已订阅Api：</span>
       <el-tag
         v-for="api in apis"
         :key="api.id"
@@ -67,6 +67,9 @@ export default class ActionApi extends Vue {
     display: flex;
     flex-wrap: wrap;
     line-height: 32px;
+    .api-label {
+      font-weight: 700;
+    }
     .api-tag {
       cursor: pointer;
       margin-right: 10px;

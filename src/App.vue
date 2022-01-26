@@ -1,8 +1,4 @@
 <template>
-  <!-- <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </div> -->
   <router-view />
   <el-dialog
     v-for="dialog in dialogs"
@@ -56,7 +52,7 @@ body {
   zoom: 0.9;
   font-size: 12px;
   border-radius: 1px;
-  background-color: #66b1ff;
+  background-color: var(--el-color-primary);
   padding: 0 5px;
   color: #fff;
   line-height: 20px;
@@ -70,7 +66,7 @@ body {
 }
 .ghost-class {
   width: 100%;
-  height: 30px;
+  height: 40px;
   outline: 1px solid var(--el-color-primary-light-3); //rgba($color: var(--el-color-primary), $alpha: 0.6);
   background-color: var(--el-color-primary-light-6);
   * {
@@ -86,7 +82,7 @@ body {
   height: 30;
 }
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: Inter, Roboto, Oxygen, Fira Sans, Helvetica Neue, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -152,5 +148,8 @@ body {
     padding-top: 10px;
     padding-bottom: 20px;
   }
+}
+.bold {
+  font-weight: 700;
 }
 </style>

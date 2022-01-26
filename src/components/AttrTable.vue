@@ -1,6 +1,6 @@
 <template>
   <div class="attr-table">
-    <el-table :data="tableData" border row-key="id" :default-expand-all="defaultExpandAll">
+    <el-table :data="tableData" border row-key="id" :default-expand-all="defaultExpandAll" empty-text="空数据">
       <el-table-column label="名称">
         <template #default="scope">
           <span v-if="!scope.row.isNew">{{ scope.row.name }}</span>

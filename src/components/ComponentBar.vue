@@ -113,12 +113,14 @@ export default class ComponentBar extends Vue {
     justify-content: space-between;
     .tools-item {
       width: calc(50% - 25px);
-      background-color: var(--el-color-primary-light-6);
+      background-color: var(--el-color-primary);
+      color: var(--el-color-white);
       padding: 10px;
       cursor: pointer;
       font-size: 12px;
       text-align: left;
       display: flex;
+      align-items: center;
       &:hover {
         outline-color: var(--el-color-primary-light-3);
         box-shadow: var(--el-box-shadow-base);

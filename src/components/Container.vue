@@ -21,7 +21,7 @@ import NestedDraggable from './NestedDraggable.vue'
   }
 })
 export default class Container extends Vue {
-  items!: IComponentMetadata[]
+  declare items: IComponentMetadata[]
 }
 </script>
 

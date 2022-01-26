@@ -1,11 +1,13 @@
 <template>
-  <teleport to=".design-selected" v-if="showTools">
-    <div class="layout-tools">
-      <el-icon v-show="desc?.tools.includes(Tools.SETTING)" @click.stop="setting"><setting /></el-icon>
-      <el-icon v-show="desc?.tools.includes(Tools.DELETE)" @click.stop="remove"><delete /></el-icon>
-      <el-icon v-show="desc?.tools.includes(Tools.COPY)" @click.stop="copy"><document-copy /></el-icon>
-    </div>
-  </teleport>
+  <div v-if="showTools" class="layout-tools-box">
+    <teleport :to="teleportTo">
+      <div class="layout-tools">
+        <el-icon v-show="desc?.tools.includes(Tools.SETTING)" @click.stop="setting"><setting /></el-icon>
+        <el-icon v-show="desc?.tools.includes(Tools.DELETE)" @click.stop="remove"><delete /></el-icon>
+        <el-icon v-show="desc?.tools.includes(Tools.COPY)" @click.stop="copy"><document-copy /></el-icon>
+      </div>
+    </teleport>
+  </div>
 </template>
 
 <script lang="ts">
@@ -28,6 +30,7 @@ export default class LayoutTools extends Vue {
   dialog: any
   desc: IDescriptor | null = null
   showTools = false
+  teleportTo = ''
   mounted() {
     designer.treeHandler.onSelectedComponentChange((metadata: IComponentMetadata | null, el: HTMLElement | null) => {
       this.showTools = false
@@ -44,9 +47,14 @@ export default class LayoutTools extends Vue {
       // } else {
       //   this.position = { display: 'none' }
       // }
-      this.$nextTick(() => {
-        this.showTools = true
-      })
+
+      this.metadata &&
+        this.$nextTick(() => {
+          if (document.querySelector('.design-selected')) {
+            this.teleportTo = '.design-selected'
+            this.showTools = true
+          }
+        })
     })
   }
   copy() {

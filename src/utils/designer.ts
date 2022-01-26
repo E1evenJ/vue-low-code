@@ -1,8 +1,6 @@
 import { reactive } from 'vue'
-import { uuid } from './common'
 import { ComponentTree } from './component-tree'
 import { IComponentMetadata, ILifecycle, IPageMetadata } from './definition/Interfaces'
-import { DataTypeEnum, MethodEnum } from './enums'
 
 class Designer extends Object {
   pageMetadata!: IPageMetadata

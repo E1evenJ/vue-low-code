@@ -1,7 +1,7 @@
 <template>
-  <el-col class="panel" :class="attrs?.class" :uuid="uuid" :span="attrs?.span || 24">
+  <div class="panel" :class="attrs?.class" :uuid="uuid" :span="attrs?.span || 24">
     <slot></slot>
-  </el-col>
+  </div>
 </template>
 
 <script lang="ts">
@@ -20,12 +20,12 @@ export default class Panel extends Base {}
 
 <style lang="scss" scoped>
 .panel {
-  // padding: 10px;
-  min-height: 50px;
+  min-height: 60px;
   outline: 1px dashed #ccc;
   display: flex;
   flex-direction: row;
   position: relative;
+  width: 100%;
   // &:hover {
   //   border-color: rgba($color: var(--el-color-primary), $alpha: 0.6);
   // }

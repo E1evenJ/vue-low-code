@@ -74,7 +74,6 @@ export default class ApiDialog extends Vue {
   }
 
   nodeClick(data: IApi) {
-    console.log(data)
     if (Reflect.getOwnPropertyDescriptor(data, 'method') !== undefined) this.currentApi = data as IApi
   }
 

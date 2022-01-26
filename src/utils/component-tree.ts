@@ -4,7 +4,6 @@
 import { isReactive, reactive } from 'vue'
 import { cloneDeep } from './common'
 import { getDefaultAttrs } from './definition/DefaultAttributeFactory'
-import { getDescriptor } from './definition/DescriptorFactory'
 import { IComponentMetadata } from './definition/Interfaces'
 import { dragdropHandler } from './dragdrop-handler'
 import { ComponentLevelEnum } from './enums'
@@ -59,7 +58,6 @@ export class ComponentTree {
         type: item.type,
         level: item.level,
         attrs: getDefaultAttrs(item.type),
-        desc: getDescriptor(item.type),
         children: []
       })
       dragData.component.list.splice(newIndex, 1, newMetadata)
@@ -100,7 +98,6 @@ export class ComponentTree {
       if (newMetadata) children?.splice(index + 1, 0, newMetadata)
       else children?.splice(index, 1)
     }
-    console.log(isReactive(children))
   }
 
   remove(pageMetadata: IComponentMetadata) {

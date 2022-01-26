@@ -12,7 +12,7 @@
 import designer from '@/utils/designer'
 import { dialogProxy } from '@/utils/dialog'
 import { Options, Vue } from 'vue-class-component'
-import { reactive, ref } from 'vue-demi'
+import { ref } from 'vue-demi'
 import ActionDialog from './ActionDialog.vue'
 import ApiDialog from './ApiDialog.vue'
 

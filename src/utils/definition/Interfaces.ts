@@ -23,10 +23,10 @@ export interface IAction {
   returnVal: boolean
   storeReturnVal?: StoreTypeEnum
   params?: any
-  methods?: IMethod | IActionGroup
+  methods?: IMethod | IMethodGroup
 }
 
-export interface IActionGroup {
+export interface IMethodGroup {
   name: string
   memo: string
   isGroup: boolean
@@ -56,7 +56,7 @@ export interface IPageMetadata {
   lifecycle: ILifecycle[]
   watches: IWatch[]
   methods: IMethod[]
-  methodGroups: IActionGroup[]
+  methodGroups: IMethodGroup[]
   props: IProp[]
   data: IData[]
   apis: IApi[]

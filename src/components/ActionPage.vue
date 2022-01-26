@@ -4,12 +4,19 @@
       :data="pageTree"
       :props="{ value: 'name', label: 'label', children: 'actions' }"
       node-key="name"
+      :default-expand-all="true"
       @node-click="nodeClick"
     >
       <template #default="{ node, data }">
         <div class="custom-node">
           <span class="bold">{{ node.label || data.name }}</span>
-          <el-icon v-if="!data.actionType" @click.stop="add(data)" color="#409eff" size="16" style="margin-left: 10px">
+          <el-icon
+            v-if="!data.actionType"
+            @click.stop="add(node, data)"
+            color="#409eff"
+            size="16"
+            style="margin-left: 10px"
+          >
             <circle-plus />
           </el-icon>
           <el-icon v-else @click.stop="remove(node, data)" color="red" size="16" style="margin-left: 10px">
@@ -55,7 +62,7 @@ export default class ActionPage extends Vue {
     this.currentAction = data.actionType ? data : null
   }
 
-  add(data: any) {
+  add(node: any, data: any) {
     const action = reactive({
       name: 'action' + data.actions.length,
       label: ActionName[ActionTypeEnum.METHOD].name,
@@ -66,10 +73,12 @@ export default class ActionPage extends Vue {
     data.actions.push(action)
     data.children.push(action)
     this.currentAction = action
+    node.expand()
   }
 
   remove(node: any, data: any) {
-    console.log('remove', node, data)
+    const children = node.parent.data.actions
+    children.splice(children.indexOf(data), 1)
   }
 }
 </script>

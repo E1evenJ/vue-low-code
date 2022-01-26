@@ -32,7 +32,7 @@ export function cloneDeep(obj: any) {
   let temp = null
   let key = null
   const keys = Object.keys(obj)
-  keys.map((item, index) => {
+  keys.map(item => {
     key = item
     temp = obj[key]
     // 如果字段的值也是一个对象则递归操作

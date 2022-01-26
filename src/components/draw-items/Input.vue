@@ -1,6 +1,10 @@
 <template>
   <el-col class="input" :uuid="uuid" :span="attrs?.span || 6" :class="attrs?.class">
     <el-input
+      class="input"
+      :uuid="uuid"
+      :span="attrs?.span || 6"
+      :class="attrs?.class"
       :type="attrs?.inputType"
       :placeholder="attrs?.textPlaceholder"
       :clearable="attrs?.textClear"
@@ -10,7 +14,8 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component'
+import { Options } from 'vue-class-component'
+import Base from './Base'
 
 @Options({
   name: 'di-input',
@@ -20,7 +25,7 @@ import { Options, Vue } from 'vue-class-component'
     attrs: Object
   }
 })
-export default class Input extends Vue {}
+export default class Input extends Base {}
 </script>
 
 <style lang="scss" scoped>

@@ -44,7 +44,7 @@ export enum RenderTypeEnum {
   TEXT,
   INPUT,
   INPUT_I18N,
-  DROPDOWN,
+  SELECT,
   NUMBER,
   SLIDER,
   CHECKBOX,

@@ -22,8 +22,9 @@ function focus(event: Event) {
 
 export default class Base extends Vue {
   mounted() {
-    const el = this.$el as HTMLElement
-    el.addEventListener('click', focus)
-    // document.addEventListener('click', removeSelectedClass);
+    this.$nextTick(() => {
+      const el = this.$el as HTMLElement
+      el.addEventListener('click', focus)
+    })
   }
 }

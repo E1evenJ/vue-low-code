@@ -16,10 +16,8 @@ import ComponentBar from '@/components/ComponentBar.vue'
 import Header from '@/components/Header.vue'
 import { Options, Vue } from 'vue-class-component'
 import { getDefaultAttrs } from '@/utils/definition/DefaultAttributeFactory'
-import { getDescriptor } from '@/utils/definition/DescriptorFactory'
 import designer from '@/utils/designer'
 import { ComponentLevelEnum, ComponentTypeEnum } from '@/utils/enums'
-import { indexHandler } from '@/utils/index-hanlder'
 import { IComponentMetadata } from '@/utils/definition/Interfaces'
 import { reactive } from 'vue-demi'
 
@@ -48,7 +46,6 @@ export default class Home extends Vue {
         type: ComponentTypeEnum.PAGE,
         attrs: getDefaultAttrs(ComponentTypeEnum.PAGE),
         level: ComponentLevelEnum.LAYOUT,
-        desc: getDescriptor(ComponentTypeEnum.PAGE),
         children: [],
         events: []
       })

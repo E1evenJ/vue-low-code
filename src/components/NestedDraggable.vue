@@ -5,10 +5,12 @@
     :list="children"
     :sort="true"
     :group="{ name: 'g1' }"
-    handle=".drag-box"
     animation="150"
-    dragClass="ghost-class"
     ghost-class="ghost-class"
+    handle=".drag-box"
+    :fallbackOnBody="true"
+    :invertSwap="true"
+    :swapThreshold="0.75"
     @add="add"
   >
     <component
@@ -16,7 +18,7 @@
       v-for="child in children"
       :key="child.uuid"
       v-bind="{ uuid: child.uuid, type: child.type, attrs: child.attrs }"
-      class="list-item"
+      class="list-item el-col"
     >
       <nested-draggable :children="child.children" />
     </component>
@@ -60,11 +62,19 @@ export default class Container extends Vue {
   width: 100%;
 }
 .drag-box {
-  width: calc(100% - 15px);
-  margin: 10px;
+  width: 100%;
+  // margin: 10px;
   align-content: center;
+  align-items: flex-end;
 }
 .el-col + .el-col {
   margin-top: 10px;
+}
+.list-item {
+}
+.el-col {
+  .el-row {
+    padding: 12px 20px;
+  }
 }
 </style>

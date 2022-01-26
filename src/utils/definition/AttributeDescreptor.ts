@@ -31,7 +31,7 @@ export class ModelField implements IAttributeDescreptor {
 export class InputType implements IAttributeDescreptor {
   value = '输入类型'
   desc = '输入框类型'
-  RenderTypeEnum = RenderTypeEnum.DROPDOWN
+  RenderTypeEnum = RenderTypeEnum.SELECT
   renderValue = [
     { key: 'text', value: '文本框' },
     { key: 'textarea', value: '文本域' },

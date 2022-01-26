@@ -5,12 +5,13 @@
       :props="{ value: 'name', label: 'label', children: 'children' }"
       node-key="name"
       ref="treeRef"
+      :default-expand-all="true"
       @node-click="nodeClick"
     >
       <template #default="{ node, data }">
         <div class="custom-node">
           <span class="bold">{{ node.label }}</span>
-          <el-icon v-if="data.isRoot" @click.stop="add(data)" color="#409eff" size="16" style="margin-left: 10px">
+          <el-icon v-if="data.isRoot" @click.stop="add(node, data)" color="#409eff" size="16" style="margin-left: 10px">
             <circle-plus />
           </el-icon>
           <el-icon v-else @click.stop="remove(node, data)" color="#F56C6C" size="16" style="margin-left: 10px">
@@ -53,7 +54,7 @@ export default class ActionComponent extends Vue {
   eventsTree: IEvent[] = []
   currentAction: IAction | null = null
   treeRef: any = null
-  metadata!: IComponentMetadata
+  declare metadata: IComponentMetadata
   mounted() {
     this.init(this.metadata)
   }
@@ -70,8 +71,8 @@ export default class ActionComponent extends Vue {
     })
   }
 
-  add(node: IEvent) {
-    let event = this.eventsTree.find((event: IEvent) => event.name === node.name)
+  add(node: any, data: IEvent) {
+    let event = this.eventsTree.find((event: IEvent) => event.name === data.name)
     if (event) {
       const action = {
         name: event?.name + event?.children?.length,
@@ -83,6 +84,7 @@ export default class ActionComponent extends Vue {
       this.currentAction = this.currentAction || action
       this.metadata?.events?.indexOf(event as IEvent) === -1 && this.metadata?.events.push(event as IEvent)
       event && event.children && this.treeRef.setCurrentKey(`click${event.children.length - 1}`)
+      node.expand()
     }
   }
 

@@ -40,7 +40,7 @@ import ActionPage from './ActionPage.vue'
     ActionApi
   },
   watch: {
-    addtionalData(data: IComponentMetadata) {
+    addtionalData() {
       this.activeName === 'ActionComponent' && (this.activeName = 'ActionMethod')
       this.activeName = this.addtionalData ? 'ActionComponent' : this.activeName
     }
@@ -48,7 +48,7 @@ import ActionPage from './ActionPage.vue'
 })
 export default class ActionDialog extends Vue {
   activeName = 'ActionMethod'
-  addtionalData!: IComponentMetadata
+  declare addtionalData: IComponentMetadata
   beforeCreate() {
     this.activeName = this.addtionalData ? 'ActionComponent' : 'ActionMethod'
   }

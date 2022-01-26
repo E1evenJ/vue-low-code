@@ -13,11 +13,13 @@ import { getDescriptor } from '@/utils/definition/DescriptorFactory'
 export default class AttrsConfig extends Vue {
   componentMetaData: IComponentMetadata | undefined = {} as IComponentMetadata
   RenderTypeEnum = RenderTypeEnum
+
   mounted() {
     designer.treeHandler.onSelectedComponentChange((item: any) => {
       this.componentMetaData = item
     })
   }
+
   render() {
     if (this.componentMetaData && this.componentMetaData.type) {
       const componentMetaData = this.componentMetaData
@@ -34,6 +36,7 @@ export default class AttrsConfig extends Vue {
       return h('div')
     }
   }
+
   private renderAttrItem(attrDesc: IAttributeDescreptor, attrs: any) {
     let attrComponent
     const clazzName = attrDesc.constructor.name
@@ -51,7 +54,7 @@ export default class AttrsConfig extends Vue {
         })
         break
       }
-      case RenderTypeEnum.DROPDOWN: {
+      case RenderTypeEnum.SELECT: {
         if (attrDesc.renderValue) {
           attrComponent = h(
             resolveComponent('el-select'),
@@ -109,9 +112,17 @@ export default class AttrsConfig extends Vue {
       case RenderTypeEnum.CASCADER_MODEL: {
         const props = designer.pageMetadata.props
         const data = designer.pageMetadata.data
+        const requests: any[] = []
+        const responses: any[] = []
+        designer.pageMetadata.apis.forEach(api => {
+          api.request && requests.push({ name: api.request.name, children: api.request.data })
+          api.response && responses.push({ name: api.response.name, children: api.response.data })
+        })
         const options = []
         props.length > 0 && options.push({ name: 'params', children: props })
         data.length > 0 && options.push({ name: 'data', children: data })
+        options.push(...requests)
+        options.push(...responses)
         attrComponent = h(
           resolveComponent('el-cascader') as any,
           {
@@ -123,15 +134,15 @@ export default class AttrsConfig extends Vue {
             clearable: true
           },
           {
-            default: ({ node, data }: any) => {
+            default: ({ data }: any) => {
               return [
-                `${data.name}${data.memo !== '' && data.memo !== undefined ? '(' + data.memo + ')' : ''}`,
-                h(resolveComponent('el-icon'), {}, () => [
-                  h(resolveComponent('circle-plus'), { style: { 'margin-left': '5px' } })
-                ])
+                `${data.name}${data.memo !== '' && data.memo !== undefined ? '(' + data.memo + ')' : ''}`
+                // h(resolveComponent('el-icon'), {}, () => [
+                //   h(resolveComponent('circle-plus'), { style: { 'margin-left': '5px' } })
+                // ])
               ]
             },
-            empty: ({ node, data }: any) => [h('span', {}, ['没有数据'])]
+            empty: () => '没有数据'
           }
         )
         break
@@ -139,6 +150,7 @@ export default class AttrsConfig extends Vue {
     }
     return h('div', { class: 'attr-item' }, [h('span', { class: 'label' }, attrDesc.value), attrComponent])
   }
+
   private bindModel(attrs: any, key: string) {
     return {
       modelValue: attrs[key],

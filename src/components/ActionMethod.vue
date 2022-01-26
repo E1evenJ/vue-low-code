@@ -1,35 +1,42 @@
 <template>
   <div class="action-method">
-    <el-tree
-      :data="methodsTree"
-      :props="{ value: 'value', label: 'label', children: 'children' }"
-      node-key="value"
-      @node-click="nodeClick"
-    >
-      <template #default="{ node, data }">
-        <div class="custom-node">
-          <span class="bold">{{ node.label || data.name }}</span>
-          <el-icon
-            v-if="data.isRoot || data.isGroup"
-            @click.stop="add(data)"
-            color="#409EFF"
-            size="16"
-            style="margin-left: 10px"
-          >
-            <circle-plus />
-          </el-icon>
-          <el-icon
-            v-if="!data.isRoot || data.isGroup"
-            @click.stop="remove(node, data)"
-            color="red"
-            size="16"
-            style="margin-left: 10px"
-          >
-            <delete />
-          </el-icon>
-        </div>
-      </template>
-    </el-tree>
+    <div class="aciton-left">
+      <el-input v-model="filterText" placeholder="按名字过滤" />
+      <el-tree
+        :data="methodsTree"
+        :props="{ value: 'value', label: 'label', children: 'children' }"
+        node-key="value"
+        ref="treeRef"
+        :default-expand-all="true"
+        :filter-node-method="filterMethod"
+        @node-click="nodeClick"
+      >
+        <template #default="{ node, data }">
+          <div class="custom-node">
+            <span class="bold">{{ node.label || data.name }}</span>
+            <el-icon
+              v-if="data.isRoot || data.isGroup"
+              @click.stop="add(node, data)"
+              color="#409EFF"
+              size="16"
+              style="margin-left: 10px"
+            >
+              <circle-plus />
+            </el-icon>
+            <el-icon
+              v-if="!data.isRoot || data.isGroup"
+              @click.stop="remove(node, data)"
+              color="red"
+              size="16"
+              style="margin-left: 10px"
+            >
+              <delete />
+            </el-icon>
+          </div>
+        </template>
+      </el-tree>
+    </div>
+
     <div class="detail" :class="{ 'no-padding': currentMethod !== null }">
       <template v-if="currentActionGroup">
         <el-row justify="start">
@@ -74,18 +81,23 @@ import { reactive } from 'vue-demi'
 import { ref } from 'vue'
 
 import MonacoEditor from 'monaco-editor-vue3'
-import { IAction, IActionGroup, IMethod, IPageMetadata } from '@/utils/definition/Interfaces'
+import { IAction, IMethodGroup, IMethod } from '@/utils/definition/Interfaces'
 import designer from '@/utils/designer'
 
 @Options({
   components: {
     MonacoEditor,
     ActionTemplate
+  },
+  watch: {
+    filterText(val: string) {
+      this.$refs.treeRef.filter(val)
+    }
   }
 })
 export default class ActionMethod extends Vue {
   methodsTree: any[] = []
-  currentActionGroup: IActionGroup | null = null
+  currentActionGroup: IMethodGroup | null = null
   currentMethod: IMethod | null = null
   currentAction: IAction | null = null
   editor: any
@@ -93,6 +105,10 @@ export default class ActionMethod extends Vue {
     selectOnLineNumbers: false,
     key: ''
   }
+  declare $refs: {
+    treeRef: any
+  }
+  filterText = ''
 
   mounted() {
     const pageMetadata = designer.pageMetadata
@@ -102,7 +118,7 @@ export default class ActionMethod extends Vue {
     ]
   }
 
-  add(data: any) {
+  add(node: any, data: any) {
     if (data.value === 'method_groups') {
       const methodGroup = {
         name: `gfn_${randomName()}`,
@@ -110,7 +126,7 @@ export default class ActionMethod extends Vue {
         memo: '',
         actions: [],
         children: []
-      } as IActionGroup
+      } as IMethodGroup
       data.children.push(methodGroup)
       this.currentMethod = null
       this.currentAction = null
@@ -140,6 +156,7 @@ export default class ActionMethod extends Vue {
       this.currentActionGroup = null
       this.currentMethod = null
     }
+    node.expand()
   }
 
   remove(node: any, data: any) {
@@ -185,6 +202,12 @@ export default class ActionMethod extends Vue {
   editorMounted(editor: any) {
     this.editor = editor
   }
+
+  filterMethod(value: string, data: any) {
+    if (!value) return true
+    ''.toLowerCase()
+    return data.name && data.name.toLowerCase().indexOf(value.toLowerCase()) !== -1
+  }
 }
 </script>
 
@@ -194,6 +217,7 @@ export default class ActionMethod extends Vue {
   .el-tree {
     width: 300px;
     border: 1px solid #f2f2f2;
+    margin-top: 10px;
   }
   .detail {
     margin-left: 20px;
