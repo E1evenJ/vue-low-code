@@ -4,9 +4,10 @@ import {
   ComponentTypeEnum,
   DataTypeEnum,
   MethodEnum,
-  StoreTypeEnum
-} from '../enums'
-import { IDescriptor } from './component-descriptor/Descriptor'
+  RenderTypeEnum,
+  StoreTypeEnum,
+  ToolType
+} from '@/utils/enums'
 
 export interface IEvent {
   name: string
@@ -123,4 +124,27 @@ export interface IServiceCategory {
 export interface IService {
   memo: string
   children: IApi[]
+}
+
+export interface IAttributeDescreptor {
+  value: string
+  desc?: string
+  renderType: RenderTypeEnum
+  default: any
+  renderValue?: { [x: string]: any }
+  [key: string]: any
+}
+
+export interface IEventDescreptor {
+  key: string
+  value: string
+}
+
+export interface IDescriptor {
+  tools: ToolType[]
+  attrDescs: IAttributeDescreptor[]
+  eventDescs: IEventDescreptor[]
+  defaultAttrs?: any
+  draggable?: string[]
+  droppable?: string[]
 }

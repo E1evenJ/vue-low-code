@@ -29,13 +29,12 @@
 </template>
 
 <script lang="ts">
-import { IEventDescreptor } from '@/utils/definition/EventDescreptor'
 import { ActionTypeEnum } from '@/utils/enums'
 import { Options, Vue } from 'vue-class-component'
 import { ActionName } from '@/utils/const'
 import ActionTemplate from './ActionTemplate.vue'
-import { IAction, IComponentMetadata, IEvent } from '@/utils/definition/Interfaces'
-import { getDescriptor } from '@/utils/definition/DescriptorFactory'
+import { IAction, IComponentMetadata, IEvent, IEventDescreptor } from '@/core/definition/Interfaces'
+import { getComponentDescriptor } from '@/core/definition/DescriptorFactory'
 
 @Options({
   components: {
@@ -61,7 +60,7 @@ export default class ActionComponent extends Vue {
 
   init(metadata: IComponentMetadata) {
     metadata.events = metadata.events || []
-    const desc = getDescriptor(metadata.type)
+    const desc = getComponentDescriptor(metadata.type)
     this.eventsTree = desc.eventDescs.map<IEvent>((item: IEventDescreptor) => {
       const event = this.metadata.events?.find(event => event.name === item.key)
       if (event) {

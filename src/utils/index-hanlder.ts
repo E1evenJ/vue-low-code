@@ -1,6 +1,6 @@
-import { IComponentMetadata } from './definition/Interfaces'
-import designer from './designer'
-import { ComponentTypeEnum } from './enums'
+import { IComponentMetadata } from '@/core/definition/Interfaces'
+import designer from '@/core/designer'
+import { ComponentTypeEnum } from '@/utils/enums'
 
 class IndexHandler {
   private _indexSet: Map<ComponentTypeEnum, number> = new Map()

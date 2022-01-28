@@ -81,8 +81,8 @@ import { reactive } from 'vue-demi'
 import { ref } from 'vue'
 
 import MonacoEditor from 'monaco-editor-vue3'
-import { IAction, IMethodGroup, IMethod } from '@/utils/definition/Interfaces'
-import designer from '@/utils/designer'
+import { IAction, IMethodGroup, IMethod } from '@/core/definition/Interfaces'
+import designer from '@/core/designer'
 
 @Options({
   components: {

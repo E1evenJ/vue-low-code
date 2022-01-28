@@ -9,21 +9,30 @@
       :move="checkMove"
       @end="end"
     >
-      <div class="tools-item" v-for="tool in tools" :key="tool.uuid">
-        <el-icon>
+      <div
+        class="tools-item"
+        :class="tool.type"
+        v-for="tool in tools"
+        :key="tool.uuid"
+        :data-draggable="tool.draggable"
+        :data-droppable="tool.droppable"
+      >
+        <i class="iconfont" :class="tool.icon"></i>
+        <!-- <el-icon>
           <component :is="tool.icon" class="item"></component>
-        </el-icon>
-        <span>{{ tool.name }}</span>
+        </el-icon> -->
+        <span>{{ tool.label }}</span>
       </div>
     </draggable>
   </div>
 </template>
 
 <script lang="ts">
-import { ComponentLevelEnum, ComponentTypeEnum } from '@/utils/enums'
 import { Options, Vue } from 'vue-class-component'
 import { VueDraggableNext } from 'vue-draggable-next'
 import { dragdropHandler } from '@/utils/dragdrop-handler'
+import { IDescriptor } from '@/core/definition/Interfaces'
+import { componentDescriptors } from '@/core/definition/DescriptorFactory'
 
 @Options({
   components: {
@@ -33,49 +42,20 @@ import { dragdropHandler } from '@/utils/dragdrop-handler'
 export default class ComponentBar extends Vue {
   drag = false
   disabled = false
-  tools: any[] = [
-    {
-      uuid: 'panel',
-      name: 'Panel',
-      type: ComponentTypeEnum.PANEL,
-      level: ComponentLevelEnum.LAYOUT,
-      icon: 'Grid',
-      children: []
-    },
-    {
-      uuid: 'input',
-      name: 'Input',
-      type: ComponentTypeEnum.INPUT,
-      level: ComponentLevelEnum.COMMON,
-      icon: 'Grid'
-    }
-  ]
+  tools: IDescriptor[] = []
   dragElemContext: any = null
   dragElem?: HTMLElement
   mounted() {
-    document.addEventListener(
-      'dragenter',
-      (event: any) => {
-        // 当可拖动的元素进入可放置的目标高亮目标节点
-        if (event.target.className === 'tools-group') {
-          event.dataTransfer.dropEffect = 'none'
-          event.dataTransfer.effectAllowed = 'none'
-          // this._removeDragStyle(this.dragElem as HTMLElement);
-        }
-        if (event.target.className === 'oz-disigner') {
-          event.dataTransfer.dropEffect = 'none'
-          event.dataTransfer.effectAllowed = 'none'
-        }
-      },
-      false
-    )
+    componentDescriptors.forEach(item => {
+      item.enable !== false && this.tools.push(item)
+    })
   }
   checkMove(event: any) {
     const elem = event.dragged as HTMLElement
     this.dragElem = elem
     this.dragElemContext = event.draggedContext
-    // this._addDragStyle(elem);
     dragdropHandler.setDragData(event.relatedContext)
+    dragdropHandler.enable(event.dragged, event.to.parentElement.parentElement)
   }
   end() {
     dragdropHandler.setDragData(null)
@@ -111,6 +91,7 @@ export default class ComponentBar extends Vue {
     display: flex;
     padding: 10px;
     justify-content: space-between;
+    flex-wrap: wrap;
     .tools-item {
       width: calc(50% - 25px);
       background-color: var(--el-color-primary);
@@ -121,12 +102,15 @@ export default class ComponentBar extends Vue {
       text-align: left;
       display: flex;
       align-items: center;
+      margin-bottom: 10px;
       &:hover {
         outline-color: var(--el-color-primary-light-3);
         box-shadow: var(--el-box-shadow-base);
       }
       i {
         margin-right: 5px;
+        height: 16px;
+        width: 16px;
       }
     }
   }

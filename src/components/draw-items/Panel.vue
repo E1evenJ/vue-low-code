@@ -1,21 +1,20 @@
 <template>
-  <div class="panel" :class="attrs?.class" :uuid="uuid" :span="attrs?.span || 24">
+  <el-col class="panel" :class="attrs?.class" :uuid="uuid" :span="attrs?.span">
     <slot></slot>
-  </div>
+  </el-col>
 </template>
 
 <script lang="ts">
 import { Options } from 'vue-class-component'
-import Base from './Base'
+import BaseComponent from '@/core/definition/BaseComponent'
 
 @Options({
-  name: 'di-panel',
   props: {
     uuid: String,
     attrs: Object
   }
 })
-export default class Panel extends Base {}
+export default class Panel extends BaseComponent {}
 </script>
 
 <style lang="scss" scoped>

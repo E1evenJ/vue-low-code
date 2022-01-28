@@ -25,8 +25,8 @@
 </template>
 
 <script lang="ts">
-import { IApi } from '@/utils/definition/Interfaces'
-import designer from '@/utils/designer'
+import { IApi } from '@/core/definition/Interfaces'
+import designer from '@/core/designer'
 import { dialogProxy } from '@/utils/dialog'
 import { Options, Vue } from 'vue-class-component'
 import ApiDialog from './ApiDialog.vue'

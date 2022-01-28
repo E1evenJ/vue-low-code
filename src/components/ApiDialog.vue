@@ -22,8 +22,8 @@
 
 <script lang="ts">
 import { uuid } from '@/utils/common'
-import { IApi, IServiceCategory } from '@/utils/definition/Interfaces'
-import designer from '@/utils/designer'
+import { IApi, IServiceCategory } from '@/core/definition/Interfaces'
+import designer from '@/core/designer'
 import { DataTypeEnum, MethodEnum } from '@/utils/enums'
 import { ElMessage } from 'element-plus'
 import { Options, Vue } from 'vue-class-component'

@@ -6,7 +6,7 @@
 </template>
 
 <script lang="ts">
-import { IComponentMetadata } from '@/utils/definition/Interfaces'
+import { IComponentMetadata } from '@/core/definition/Interfaces'
 import { Options, Vue } from 'vue-class-component'
 import LayoutTools from './LayoutTools.vue'
 import NestedDraggable from './NestedDraggable.vue'
@@ -31,7 +31,7 @@ export default class Container extends Vue {
   border-radius: 4px;
   background-color: white;
   margin: 0 10px;
-  > .drag-box {
+  > .nest-drag-box {
     margin: 0;
     width: 100%;
     height: 100%;

@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts">
-import designer from '@/utils/designer'
+import designer from '@/core/designer'
 import { dialogProxy } from '@/utils/dialog'
 import { Options, Vue } from 'vue-class-component'
 import { ref } from 'vue-demi'

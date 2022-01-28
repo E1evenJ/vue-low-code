@@ -15,11 +15,11 @@ import Container from '@/components/Container.vue'
 import ComponentBar from '@/components/ComponentBar.vue'
 import Header from '@/components/Header.vue'
 import { Options, Vue } from 'vue-class-component'
-import { getDefaultAttrs } from '@/utils/definition/DefaultAttributeFactory'
-import designer from '@/utils/designer'
+import designer from '@/core/designer'
 import { ComponentLevelEnum, ComponentTypeEnum } from '@/utils/enums'
-import { IComponentMetadata } from '@/utils/definition/Interfaces'
+import { IComponentMetadata } from '@/core/definition/Interfaces'
 import { reactive } from 'vue-demi'
+import { getDefaultAttrs } from '@/core/definition/DescriptorFactory'
 
 @Options({
   components: {

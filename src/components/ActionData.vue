@@ -25,7 +25,7 @@
 
 <script lang="ts">
 import { uuid } from '@/utils/common'
-import designer from '@/utils/designer'
+import designer from '@/core/designer'
 import { DataTypeEnum } from '@/utils/enums'
 import { Options, Vue } from 'vue-class-component'
 import AttrTable from './AttrTable.vue'

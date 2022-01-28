@@ -104,19 +104,7 @@ body {
     }
   }
 }
-.attr-item {
-  line-height: 30px;
-  text-align: left;
-  padding: 5px 10px;
-  display: flex;
-  align-items: center;
-  .label {
-    width: 100px;
-  }
-  .attr-right {
-    width: 214px;
-  }
-}
+
 ::-webkit-scrollbar {
   /*滚动条整体样式*/
   width: 10px; /*高宽分别对应横竖滚动条的尺寸*/

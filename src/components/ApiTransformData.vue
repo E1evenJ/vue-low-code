@@ -21,7 +21,7 @@
 </template>
 
 <script lang="ts">
-import { IApi } from '@/utils/definition/Interfaces'
+import { IApi } from '@/core/definition/Interfaces'
 import { Options, Vue } from 'vue-class-component'
 import AttrTable from './AttrTable.vue'
 

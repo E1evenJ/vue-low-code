@@ -1,4 +1,4 @@
-import { ActionTypeEnum } from './enums'
+import { ActionTypeEnum } from '@/utils/enums'
 
 export const ActionName = {
   [ActionTypeEnum.API]: { name: '调用服务' },

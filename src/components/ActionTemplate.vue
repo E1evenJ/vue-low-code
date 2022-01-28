@@ -27,8 +27,8 @@
 
 <script lang="ts">
 import { ActionName, ActionTypeConst } from '@/utils/const'
-import { IAction } from '@/utils/definition/Interfaces'
-import designer from '@/utils/designer'
+import { IAction } from '@/core/definition/Interfaces'
+import designer from '@/core/designer'
 import { Options, Vue } from 'vue-class-component'
 
 @Options({

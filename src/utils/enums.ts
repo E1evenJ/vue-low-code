@@ -2,7 +2,8 @@ export enum ComponentTypeEnum {
   PAGE = 'di-page',
   PANEL = 'di-panel',
   FORM = 'di-form',
-  INPUT = 'di-input'
+  INPUT = 'di-input',
+  FORM_ITEM = 'di-form-item'
 }
 
 export enum ComponentLevelEnum {
@@ -49,7 +50,9 @@ export enum RenderTypeEnum {
   SLIDER,
   CHECKBOX,
   BUTTON_GROUP,
-  CASCADER_MODEL
+  CASCADER_MODEL_FIELD,
+  CASCADER_MODEL,
+  RULES
 }
 
 export enum DataTypeEnum {

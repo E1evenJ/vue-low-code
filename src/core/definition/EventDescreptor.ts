@@ -1,7 +1,4 @@
-export interface IEventDescreptor {
-  key: string
-  value: string
-}
+import { IEventDescreptor } from './Interfaces'
 
 export class ClickE implements IEventDescreptor {
   key = 'click'
@@ -41,4 +38,9 @@ export class KeyUpE implements IEventDescreptor {
 export class ChangeE implements IEventDescreptor {
   key = 'change'
   value = '值改变事件(change)'
+}
+
+export class ValidateE implements IEventDescreptor {
+  key = 'validate'
+  value = '任一表单项被校验后触发'
 }

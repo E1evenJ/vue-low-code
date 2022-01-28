@@ -1,4 +1,4 @@
-import designer from '@/utils/designer'
+import designer from '@/core/designer'
 import { Vue } from 'vue-class-component'
 
 function getParentByuuid(el: HTMLElement | null): any {
@@ -20,7 +20,7 @@ function focus(event: Event) {
   designer.treeHandler.setSelectedComponent(elem, uuid)
 }
 
-export default class Base extends Vue {
+export default class BaseComponent extends Vue {
   mounted() {
     this.$nextTick(() => {
       const el = this.$el as HTMLElement

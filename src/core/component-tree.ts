@@ -1,13 +1,13 @@
 // import { resolveComponent, TransitionGroup, h, ConcreteComponent } from 'vue';
 // import { VueDraggableNext } from 'vue-draggable-next';
 
-import { isReactive, reactive } from 'vue'
-import { cloneDeep } from './common'
-import { getDefaultAttrs } from './definition/DefaultAttributeFactory'
+import { nextTick, reactive } from 'vue'
+import { cloneDeep } from '@/utils/common'
+import { getDefaultAttrs } from './definition/DescriptorFactory'
 import { IComponentMetadata } from './definition/Interfaces'
-import { dragdropHandler } from './dragdrop-handler'
-import { ComponentLevelEnum } from './enums'
-import { indexHandler } from './index-hanlder'
+import { dragdropHandler } from '@/utils/dragdrop-handler'
+import { ComponentLevelEnum } from '@/utils/enums'
+import { indexHandler } from '@/utils/index-hanlder'
 
 export class ComponentTree {
   private readonly _componentMetadatas: IComponentMetadata[]
@@ -51,10 +51,12 @@ export class ComponentTree {
 
   add(newIndex: number): void {
     const dragData = dragdropHandler.getdragData()
+    const candrop = dragdropHandler.candrop
     if (dragData && dragData.component.list) {
       const item = dragData.component.list[newIndex]
+      const uuid = item.type.replace('di-', '')
       const newMetadata = reactive({
-        uuid: `${item.type.split('-')[1]}_${indexHandler.plusCount(item.type)}`,
+        uuid: `${uuid}_${indexHandler.plusCount(item.type)}`,
         type: item.type,
         level: item.level,
         attrs: getDefaultAttrs(item.type),

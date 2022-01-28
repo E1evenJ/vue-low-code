@@ -8,7 +8,6 @@
 import { Options, Vue } from 'vue-class-component'
 
 @Options({
-  name: 'di-page',
   components: {}
 })
 export default class Page extends Vue {}

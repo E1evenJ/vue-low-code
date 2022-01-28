@@ -2,30 +2,26 @@
   <el-col class="input" :uuid="uuid" :span="attrs?.span || 6" :class="attrs?.class">
     <el-input
       class="input"
-      :uuid="uuid"
-      :span="attrs?.span || 6"
-      :class="attrs?.class"
-      :type="attrs?.inputType"
-      :placeholder="attrs?.textPlaceholder"
-      :clearable="attrs?.textClear"
-      :size="attrs?.componentSize"
+      :readonly="true"
+      :type="attrs?.type"
+      :placeholder="attrs?.placeholder"
+      :clearable="attrs?.clearable"
+      :size="attrs?.size"
     ></el-input>
   </el-col>
 </template>
 
 <script lang="ts">
 import { Options } from 'vue-class-component'
-import Base from './Base'
+import BaseComponent from '@/core/definition/BaseComponent'
 
 @Options({
-  name: 'di-input',
-  components: {},
   props: {
     uuid: String,
     attrs: Object
   }
 })
-export default class Input extends Base {}
+export default class Input extends BaseComponent {}
 </script>
 
 <style lang="scss" scoped>
@@ -33,9 +29,11 @@ export default class Input extends Base {}
   position: relative;
   outline: 1px dashed #ccc;
   width: 100%;
-  :deep .el-input__suffix {
-    display: flex;
-    align-items: center;
+  :deep {
+    .el-input__suffix {
+      display: flex;
+      align-items: center;
+    }
   }
 }
 </style>

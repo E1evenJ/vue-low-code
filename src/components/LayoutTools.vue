@@ -15,10 +15,9 @@ import { dialogProxy } from '@/utils/dialog'
 import { ToolType } from '@/utils/enums'
 import { Options, Vue } from 'vue-class-component'
 import ActionDialog from './ActionDialog.vue'
-import { IComponentMetadata } from '@/utils/definition/Interfaces'
-import designer from '@/utils/designer'
-import { getDescriptor } from '@/utils/definition/DescriptorFactory'
-import { IDescriptor } from '@/utils/definition/component-descriptor/Descriptor'
+import { IComponentMetadata, IDescriptor } from '@/core/definition/Interfaces'
+import designer from '@/core/designer'
+import { getComponentDescriptor } from '@/core/definition/DescriptorFactory'
 
 @Options({
   components: {}
@@ -35,7 +34,7 @@ export default class LayoutTools extends Vue {
     designer.treeHandler.onSelectedComponentChange((metadata: IComponentMetadata | null, el: HTMLElement | null) => {
       this.showTools = false
       this.metadata = metadata
-      if (metadata) this.desc = getDescriptor(metadata.type)
+      if (metadata) this.desc = getComponentDescriptor(metadata.type)
       this.el = el
       // if (el) {
       //   const { left, top, width } = el.getBoundingClientRect()
