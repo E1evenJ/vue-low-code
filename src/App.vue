@@ -4,16 +4,18 @@
     v-for="dialog in dialogs"
     :key="dialog.uuid"
     :custom-class="
-      'custom-dialog ' + (dialog.title === undefined || dialog.title === '' || dialog.title === null ? 'no-header' : '')
+      'custom-dialog' + (dialog.title === undefined || dialog.title === '' || dialog.title === null ? ' no-header' : '')
     "
     v-model="dialog.visible"
     :title="dialog.title"
     :width="dialog.width"
+    :fullscreen="dialog.fullscreen"
+    :show-close="dialog.showClose"
     :before-close="dialog.beforeClose"
     @opened="opened(dialog)"
     @closed="dialog.closed"
   >
-    <component ref="dialogComponent" :is="dialog.dialogComponent" :addtionalData="dialog.data" />
+    <component ref="dialogComponent" :is="dialog.dialogComponent" :dialog="dialog" :addtionalData="dialog.data" />
   </el-dialog>
 </template>
 
@@ -130,6 +132,11 @@ body {
     }
     .el-dialog__headerbtn {
       z-index: 10;
+    }
+  }
+  &.is-fullscreen {
+    .el-dialog__body {
+      padding: 0px;
     }
   }
   .el-dialog__body {

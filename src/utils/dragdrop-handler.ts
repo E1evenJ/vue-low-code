@@ -46,7 +46,6 @@ class DragDropHandler {
           }
         }
       } else if (enable === '-') {
-        console.log(to.parentElement?.classList, dpoppableArr)
         for (const item of dpoppableArr) {
           canDrop = !(to.parentElement?.classList.contains(item) || to.parentElement?.classList.contains(`di-${item}`))
           if (canDrop === false) {

@@ -1,8 +1,11 @@
 import { Component, markRaw, reactive } from 'vue'
 
 export interface DialogOption {
-  title: string
+  title?: string
   width?: string
+  height?: string
+  showClose?: boolean
+  fullscreen?: boolean
   data?: any
   beforeClose?: (done: () => void) => void
   closed?: () => void
@@ -26,6 +29,7 @@ class DialogProxy {
         uuid: `dialog_${++this._index}`,
         visible: true,
         width: '80%',
+        height: '',
         dialogComponent: markRaw(dialogComponent),
         ...option
       })

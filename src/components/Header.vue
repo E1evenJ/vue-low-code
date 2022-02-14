@@ -1,6 +1,7 @@
 <template>
   <div class="header">
     <el-button-group>
+      <el-button plain @click="debug">调试</el-button>
       <el-button plain @click="subscribe">订阅</el-button>
       <el-button plain @click="setting">配置</el-button>
       <el-button plain @click="save">保存</el-button>
@@ -15,6 +16,7 @@ import { Options, Vue } from 'vue-class-component'
 import { ref } from 'vue-demi'
 import ActionDialog from './ActionDialog.vue'
 import ApiDialog from './ApiDialog.vue'
+import DebugDialog from './DebugDialog.vue'
 
 @Options({
   components: {}
@@ -44,6 +46,10 @@ export default class Header extends Vue {
 
   subscribe() {
     dialogProxy.open(ApiDialog, { title: '订阅接口' }, true)
+  }
+
+  debug() {
+    dialogProxy.open(DebugDialog, { width: '100vw', height: '100vh', showClose: false, fullscreen: true })
   }
 }
 </script>

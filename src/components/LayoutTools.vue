@@ -2,6 +2,7 @@
   <div v-if="showTools" class="layout-tools-box">
     <teleport :to="teleportTo">
       <div class="layout-tools">
+        <el-icon v-show="desc?.tools.includes(Tools.PLUS)" @click.stop="plus"><plus /></el-icon>
         <el-icon v-show="desc?.tools.includes(Tools.SETTING)" @click.stop="setting"><setting /></el-icon>
         <el-icon v-show="desc?.tools.includes(Tools.DELETE)" @click.stop="remove"><delete /></el-icon>
         <el-icon v-show="desc?.tools.includes(Tools.COPY)" @click.stop="copy"><document-copy /></el-icon>
@@ -18,6 +19,7 @@ import ActionDialog from './ActionDialog.vue'
 import { IComponentMetadata, IDescriptor } from '@/core/definition/Interfaces'
 import designer from '@/core/designer'
 import { getComponentDescriptor } from '@/core/definition/DescriptorFactory'
+import PlusDialog from './PlusDialog.vue'
 
 @Options({
   components: {}
@@ -26,7 +28,8 @@ export default class LayoutTools extends Vue {
   metadata: IComponentMetadata | null = null
   el: HTMLElement | null = null
   Tools = ToolType
-  dialog: any
+  settingDialog: any
+  plusDialog: any
   desc: IDescriptor | null = null
   showTools = false
   teleportTo = ''
@@ -63,15 +66,39 @@ export default class LayoutTools extends Vue {
     this.metadata && designer.treeHandler.remove(this.metadata)
   }
   setting() {
-    if (this.dialog) {
-      this.dialog.visible = true
-      this.dialog.data = this.metadata
+    if (this.settingDialog) {
+      this.settingDialog.visible = true
+      this.settingDialog.data = this.metadata
     } else {
-      this.dialog = dialogProxy.open(
+      this.settingDialog = dialogProxy.open(
         ActionDialog,
         {
           title: '',
           data: this.metadata
+          // beforeClose: (done: () => void) => {
+          //   console.log('beforeClose')
+          //   done()
+          // },
+          // closed: () => {
+          //   console.log('closed')
+          //   dialogProxy.destroy(this.settingDialog)
+          // }
+        },
+        true
+      )
+    }
+  }
+  plus() {
+    if (this.plusDialog) {
+      this.plusDialog.visible = true
+      this.plusDialog.data = this.metadata
+    } else {
+      this.plusDialog = dialogProxy.open(
+        PlusDialog,
+        {
+          title: '',
+          data: this.metadata,
+          width: '500px'
           // beforeClose: (done: () => void) => {
           //   console.log('beforeClose')
           //   done()

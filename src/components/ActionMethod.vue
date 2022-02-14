@@ -74,8 +74,6 @@
 <script lang="ts">
 import { randomName } from '@/utils/common'
 import { Options, Vue } from 'vue-class-component'
-import { ActionTypeEnum } from '@/utils/enums'
-import { ActionName } from '@/utils/const'
 import ActionTemplate from './ActionTemplate.vue'
 import { reactive } from 'vue-demi'
 import { ref } from 'vue'
@@ -83,6 +81,7 @@ import { ref } from 'vue'
 import MonacoEditor from 'monaco-editor-vue3'
 import { IAction, IMethodGroup, IMethod } from '@/core/definition/Interfaces'
 import designer from '@/core/designer'
+import { newAction } from '@/utils/attr-util'
 
 @Options({
   components: {
@@ -120,12 +119,13 @@ export default class ActionMethod extends Vue {
 
   add(node: any, data: any) {
     if (data.value === 'method_groups') {
+      const methods: any[] = []
       const methodGroup = {
         name: `gfn_${randomName()}`,
         isGroup: true,
         memo: '',
-        actions: [],
-        children: []
+        methods,
+        children: methods
       } as IMethodGroup
       data.children.push(methodGroup)
       this.currentMethod = null
@@ -143,13 +143,7 @@ export default class ActionMethod extends Vue {
       this.currentAction = null
       this.currentMethod = method
     } else if (data.isGroup) {
-      const action = reactive({
-        name: 'actionGroup' + data.actions.length,
-        label: ActionName[ActionTypeEnum.METHOD].name,
-        actionType: ActionTypeEnum.METHOD,
-        returnVal: false
-      })
-      data.actions.push(action)
+      const action = reactive(newAction('actionGroup' + data.children.length))
       data.children.push(action)
       this.currentAction = action
       this.options.key = `key_${randomName()}`

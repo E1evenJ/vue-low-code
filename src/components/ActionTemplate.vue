@@ -14,24 +14,27 @@
         <el-input v-model="action.condition"></el-input>
       </el-col>
     </el-row>
-    <el-row justify="start">
-      <el-col :span="6">选择函数</el-col>
-      <el-col :span="18">
-        <el-select v-model="action.methods" placeholder="选择函数">
-          <el-option v-for="item in methodSelect" :key="item.value" :label="item.label" :value="item.value"></el-option>
-        </el-select>
-      </el-col>
-    </el-row>
+    <component :is="action.actionComponent" :action="action"></component>
   </div>
 </template>
 
 <script lang="ts">
-import { ActionName, ActionTypeConst } from '@/utils/const'
+import { ActionComponentConst, ActionNameConst, ActionTypeConst } from '@/utils/const'
 import { IAction } from '@/core/definition/Interfaces'
-import designer from '@/core/designer'
 import { Options, Vue } from 'vue-class-component'
 
+const components: any = {}
+const files = require.context('./actions', false, /.vue$/) as any
+files.keys().forEach((key: string) => {
+  const clazz = files(key).default as any
+  if (clazz) {
+    const res = /([a-zA-Z0-9-]*)\.vue/.exec(clazz.__file)
+    res && (components[res[1]] = clazz)
+  }
+})
+
 @Options({
+  components,
   props: {
     action: Object
   }
@@ -39,28 +42,17 @@ import { Options, Vue } from 'vue-class-component'
 export default class ActionTemplate extends Vue {
   declare action: IAction
   ActionTypeConst = ActionTypeConst
-  methodSelect: { label: string; value: string }[] = []
-
-  mounted() {
-    const methods = designer.pageMetadata.methods.map(method => {
-      return { label: `自定义函数: ${method.name}`, value: method.name }
-    })
-    const groupAction = designer.pageMetadata.methodGroups.map(methodGroup => {
-      return { label: `编排函数: ${methodGroup.name}`, value: methodGroup.name }
-    })
-    const initMethod = { label: `页面初始化函数: init`, value: 'init' }
-    this.methodSelect = [...methods, ...groupAction, initMethod]
-  }
 
   changeActionType() {
     if (this.action) {
-      this.action.label = ActionName[this.action.actionType].name
+      this.action.label = ActionNameConst[this.action.actionType].name
+      this.action.actionComponent = ActionComponentConst[this.action.actionType].name
     }
   }
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .action-template {
   width: 400px;
   .el-col {

@@ -29,12 +29,11 @@
 </template>
 
 <script lang="ts">
-import { ActionTypeEnum } from '@/utils/enums'
 import { Options, Vue } from 'vue-class-component'
-import { ActionName } from '@/utils/const'
 import ActionTemplate from './ActionTemplate.vue'
 import { IAction, IComponentMetadata, IEvent, IEventDescreptor } from '@/core/definition/Interfaces'
 import { getComponentDescriptor } from '@/core/definition/DescriptorFactory'
+import { newAction } from '@/utils/attr-util'
 
 @Options({
   components: {
@@ -73,12 +72,7 @@ export default class ActionComponent extends Vue {
   add(node: any, data: IEvent) {
     let event = this.eventsTree.find((event: IEvent) => event.name === data.name)
     if (event) {
-      const action = {
-        name: event?.name + event?.children?.length,
-        label: ActionName[ActionTypeEnum.METHOD].name,
-        actionType: ActionTypeEnum.METHOD,
-        returnVal: false
-      }
+      const action = newAction(event?.name + event?.children?.length)
       event?.children?.push(action)
       this.currentAction = this.currentAction || action
       this.metadata?.events?.indexOf(event as IEvent) === -1 && this.metadata?.events.push(event as IEvent)

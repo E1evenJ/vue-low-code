@@ -3,31 +3,29 @@ import { bindModel } from '@/utils/common'
 import { IAttributeDescreptor } from '../definition/Interfaces'
 import designer from '../designer'
 import { RenderTypeEnum } from '@/utils/enums'
+import { dataSelect } from '@/utils/attr-util'
 
-function cascaderModelProxy(showAllLeval: boolean) {
-  return function cascaderModel(attrDesc: IAttributeDescreptor, attrs: any, modelFiledName: string) {
-    const props = designer.pageMetadata.props
-    const data = designer.pageMetadata.data
-    const requests: any[] = []
-    const responses: any[] = []
-    designer.pageMetadata.apis.forEach(api => {
-      api.request && requests.push({ name: api.request.name, children: api.request.data })
-      api.response && responses.push({ name: api.response.name, children: api.response.data })
-    })
-    const options = []
-    props.length > 0 && options.push({ name: 'params', children: props })
-    data.length > 0 && options.push({ name: 'data', children: data })
-    options.push(...requests)
-    options.push(...responses)
+const cascaderModelProxy = (checkStrictly: boolean) => {
+  return (attrDesc: IAttributeDescreptor, attrs: any, modelFiledName: string, ctx?: any) => {
+    const options = dataSelect(designer.pageMetadata)
     const attrComponent = h(
       resolveComponent('el-cascader') as any,
       {
         class: 'attr-right',
-        ...bindModel(attrs, modelFiledName),
+        modelValue: attrs[modelFiledName],
+        'onUpdate:modelValue': (value: any) => {
+          const checkedNode = ctx.$refs.cascader.getCheckedNodes()
+          attrs[modelFiledName] = value
+          const path = [...checkedNode[0].pathValues]
+          path[0] === 'props' && path.splice(0, 1)
+          path[0] === 'data' && path.splice(0, 1)
+          attrs[modelFiledName + '_path'] = path
+        },
         options,
-        props: { value: 'name', label: 'name', children: 'children', emitPath: false, checkStrictly: true },
-        'show-all-levels': showAllLeval,
-        clearable: true
+        props: { value: 'name', label: 'name', children: 'children', emitPath: false, checkStrictly: checkStrictly },
+        'show-all-levels': true,
+        clearable: true,
+        ref: 'cascader'
       },
       {
         default: ({ data }: any) => {

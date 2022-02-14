@@ -38,7 +38,7 @@ export default class Form implements IDescriptor {
     return Form.droppable
   }
   constructor() {
-    this.tools = [ToolType.SETTING, ToolType.COPY, ToolType.DELETE]
+    this.tools = [ToolType.PLUS, ToolType.COPY, ToolType.DELETE]
     this.attrDescs = [
       new Uuid(),
       new Span(),

@@ -16,7 +16,8 @@ export enum ComponentLevelEnum {
 export enum ToolType {
   SETTING,
   COPY,
-  DELETE
+  DELETE,
+  PLUS
 }
 
 export enum ActionTypeEnum {
@@ -68,4 +69,9 @@ export enum MethodEnum {
   PUT = 'PUT',
   DELETE = 'DELETE',
   REMOVE = 'REMOVE'
+}
+
+export enum DefaultEnum {
+  STATIC,
+  INITPROP
 }

@@ -92,3 +92,7 @@ export function bindModel(attrs: any, key: string) {
     }
   }
 }
+
+export function path2Data(path: string) {
+  return null
+}

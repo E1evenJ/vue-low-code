@@ -3,6 +3,7 @@ import {
   ComponentLevelEnum,
   ComponentTypeEnum,
   DataTypeEnum,
+  DefaultEnum,
   MethodEnum,
   RenderTypeEnum,
   StoreTypeEnum,
@@ -21,17 +22,30 @@ export interface IAction {
   label: string
   actionType: ActionTypeEnum
   condition?: string
-  returnVal: boolean
-  storeReturnVal?: StoreTypeEnum
   params?: any
-  methods?: IMethod | IMethodGroup
+  actionComponent: string
+  value: IActionMethod | IActionApi
+}
+
+export interface IActionMethod {
+  method?: string
+  hasReturn?: boolean
+  storeReturnVal?: StoreTypeEnum
+  returnVal?: any
+}
+
+export interface IActionApi {
+  api?: string
+  value_path?: any[]
+  paramProcess?: string
+  failCallback?: string
 }
 
 export interface IMethodGroup {
   name: string
   memo: string
   isGroup: boolean
-  actions: IAction[]
+  methods: IMethod[]
 }
 
 export interface IMethod {
@@ -91,6 +105,8 @@ export interface IData {
   children?: IData[]
   memo?: string
   isNew?: boolean
+  defaultType?: DefaultEnum
+  default?: string
 }
 
 export interface IApi {
@@ -147,4 +163,9 @@ export interface IDescriptor {
   defaultAttrs?: any
   draggable?: string[]
   droppable?: string[]
+}
+
+export interface ISelect {
+  label: string
+  value: string
 }

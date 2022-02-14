@@ -17,7 +17,7 @@
             <el-button plain @click.stop="addData">新增</el-button>
           </div>
         </template>
-        <AttrTable :tableData="tableData"></AttrTable>
+        <AttrTable :tableData="tableData" :props="tableProps"></AttrTable>
       </el-collapse-item>
     </el-collapse>
   </div>
@@ -26,7 +26,7 @@
 <script lang="ts">
 import { uuid } from '@/utils/common'
 import designer from '@/core/designer'
-import { DataTypeEnum } from '@/utils/enums'
+import { DataTypeEnum, DefaultEnum } from '@/utils/enums'
 import { Options, Vue } from 'vue-class-component'
 import AttrTable from './AttrTable.vue'
 
@@ -55,7 +55,8 @@ export default class ActionData extends Vue {
       name: '',
       memo: '',
       isNew: true,
-      dataType: DataTypeEnum.STRING
+      dataType: DataTypeEnum.STRING,
+      defautType: DefaultEnum.STATIC
     }
   }
 }

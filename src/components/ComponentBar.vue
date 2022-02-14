@@ -1,29 +1,95 @@
 <template>
   <div class="toolbar">
-    <draggable
-      class="tools-group"
-      :list="tools"
-      :sort="false"
-      :group="{ name: 'g1', pull: 'clone', put: false }"
-      :disabled="disabled"
-      :move="checkMove"
-      @end="end"
-    >
-      <div
-        class="tools-item"
-        :class="tool.type"
-        v-for="tool in tools"
-        :key="tool.uuid"
-        :data-draggable="tool.draggable"
-        :data-droppable="tool.droppable"
-      >
-        <i class="iconfont" :class="tool.icon"></i>
-        <!-- <el-icon>
-          <component :is="tool.icon" class="item"></component>
-        </el-icon> -->
-        <span>{{ tool.label }}</span>
-      </div>
-    </draggable>
+    <el-collapse v-model="activeNames">
+      <el-collapse-item title="布局组件" name="1">
+        <draggable
+          class="tools-group"
+          :list="layoutTools"
+          :sort="false"
+          :group="{ name: 'g1', pull: 'clone', put: false }"
+          :move="checkMove"
+          @end="end"
+        >
+          <div
+            class="tools-item"
+            :class="tool.type"
+            v-for="tool in layoutTools"
+            :key="tool.uuid"
+            :data-draggable="tool.draggable"
+            :data-droppable="tool.droppable"
+          >
+            <i class="iconfont" :class="tool.icon"></i>
+            <span>{{ tool.label }}</span>
+          </div>
+        </draggable>
+      </el-collapse-item>
+      <el-collapse-item title="基础组件" name="2">
+        <draggable
+          class="tools-group"
+          :list="commonTools"
+          :sort="false"
+          :group="{ name: 'g1', pull: 'clone', put: false }"
+          :move="checkMove"
+          @end="end"
+        >
+          <div
+            class="tools-item"
+            :class="tool.type"
+            v-for="tool in commonTools"
+            :key="tool.uuid"
+            :data-draggable="tool.draggable"
+            :data-droppable="tool.droppable"
+          >
+            <i class="iconfont" :class="tool.icon"></i>
+            <span>{{ tool.label }}</span>
+          </div>
+        </draggable>
+      </el-collapse-item>
+      <el-collapse-item title="高级组件" name="3">
+        <draggable
+          class="tools-group"
+          :list="advanceTools"
+          :sort="false"
+          :group="{ name: 'g1', pull: 'clone', put: false }"
+          :move="checkMove"
+          @end="end"
+        >
+          <div
+            class="tools-item"
+            :class="tool.type"
+            v-for="tool in advanceTools"
+            :key="tool.uuid"
+            :data-draggable="tool.draggable"
+            :data-droppable="tool.droppable"
+          >
+            <i class="iconfont" :class="tool.icon"></i>
+            <span>{{ tool.label }}</span>
+          </div>
+        </draggable>
+      </el-collapse-item>
+      <el-collapse-item title="图表组件" name="4">
+        <draggable
+          class="tools-group"
+          :list="chartTools"
+          :sort="false"
+          :group="{ name: 'g1', pull: 'clone', put: false }"
+          :move="checkMove"
+          @end="end"
+        >
+          <div
+            class="tools-item"
+            :class="tool.type"
+            v-for="tool in chartTools"
+            :key="tool.uuid"
+            :data-draggable="tool.draggable"
+            :data-droppable="tool.droppable"
+          >
+            <i class="iconfont" :class="tool.icon"></i>
+            <span>{{ tool.label }}</span>
+          </div>
+        </draggable>
+      </el-collapse-item>
+    </el-collapse>
   </div>
 </template>
 
@@ -31,8 +97,8 @@
 import { Options, Vue } from 'vue-class-component'
 import { VueDraggableNext } from 'vue-draggable-next'
 import { dragdropHandler } from '@/utils/dragdrop-handler'
-import { IDescriptor } from '@/core/definition/Interfaces'
 import { componentDescriptors } from '@/core/definition/DescriptorFactory'
+import { ComponentLevelEnum } from '@/utils/enums'
 
 @Options({
   components: {
@@ -40,22 +106,24 @@ import { componentDescriptors } from '@/core/definition/DescriptorFactory'
   }
 })
 export default class ComponentBar extends Vue {
-  drag = false
-  disabled = false
-  tools: IDescriptor[] = []
-  dragElemContext: any = null
-  dragElem?: HTMLElement
+  activeNames = ['1', '2', '3', '4']
+  tools: any[] = []
+  layoutTools: any[] = []
+  commonTools: any[] = []
+  advanceTools: any[] = []
+  chartTools: any[] = []
+
   mounted() {
     componentDescriptors.forEach(item => {
       item.enable !== false && this.tools.push(item)
     })
+    this.layoutTools = this.tools.filter(item => item.level === ComponentLevelEnum.LAYOUT)
+    this.commonTools = this.tools.filter(item => item.level === ComponentLevelEnum.COMMON)
+    this.advanceTools = this.tools.filter(item => item.level === ComponentLevelEnum.ADVANCE)
+    this.chartTools = this.tools.filter(item => item.level === ComponentLevelEnum.CHART)
   }
   checkMove(event: any) {
-    const elem = event.dragged as HTMLElement
-    this.dragElem = elem
-    this.dragElemContext = event.draggedContext
     dragdropHandler.setDragData(event.relatedContext)
-    dragdropHandler.enable(event.dragged, event.to.parentElement.parentElement)
   }
   end() {
     dragdropHandler.setDragData(null)
@@ -84,19 +152,19 @@ export default class ComponentBar extends Vue {
 <style lang="scss" scoped>
 .toolbar {
   width: 250px;
-  height: 100%;
   border-radius: 4px;
   background-color: white;
+  padding: 0 10px;
   .tools-group {
     display: flex;
     padding: 10px;
     justify-content: space-between;
     flex-wrap: wrap;
     .tools-item {
-      width: calc(50% - 25px);
+      width: calc(50% - 20px);
       background-color: var(--el-color-primary);
       color: var(--el-color-white);
-      padding: 10px;
+      padding: 5px 5px 5px 10px;
       cursor: pointer;
       font-size: 12px;
       text-align: left;
@@ -108,9 +176,7 @@ export default class ComponentBar extends Vue {
         box-shadow: var(--el-box-shadow-base);
       }
       i {
-        margin-right: 5px;
-        height: 16px;
-        width: 16px;
+        margin-right: 10px;
       }
     }
   }

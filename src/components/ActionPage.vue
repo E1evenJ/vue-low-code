@@ -2,7 +2,7 @@
   <div class="action-page">
     <el-tree
       :data="pageTree"
-      :props="{ value: 'name', label: 'label', children: 'actions' }"
+      :props="{ value: 'name', label: 'label', children: 'children' }"
       node-key="name"
       :default-expand-all="true"
       @node-click="nodeClick"
@@ -11,7 +11,7 @@
         <div class="custom-node">
           <span class="bold">{{ node.label || data.name }}</span>
           <el-icon
-            v-if="!data.actionType"
+            v-if="data.actionType === undefined"
             @click.stop="add(node, data)"
             color="#409eff"
             size="16"
@@ -34,13 +34,12 @@
 </template>
 
 <script lang="ts">
-import { ActionName } from '@/utils/const'
 import { IAction } from '@/core/definition/Interfaces'
 import designer from '@/core/designer'
-import { ActionTypeEnum } from '@/utils/enums'
-import { reactive } from 'vue'
+import { isReactive, reactive } from 'vue'
 import { Options, Vue } from 'vue-class-component'
 import ActionTemplate from './ActionTemplate.vue'
+import { newAction } from '@/utils/attr-util'
 
 @Options({
   components: {
@@ -59,25 +58,20 @@ export default class ActionPage extends Vue {
   }
 
   nodeClick(data: IAction) {
-    this.currentAction = data.actionType ? data : null
+    this.currentAction = data.actionType !== undefined ? data : null
   }
 
   add(node: any, data: any) {
-    const action = reactive({
-      name: 'action' + data.actions.length,
-      label: ActionName[ActionTypeEnum.METHOD].name,
-      actionType: ActionTypeEnum.METHOD,
-      returnVal: false
-    })
-    data.children = data.children || []
-    data.actions.push(action)
+    const action = reactive(newAction('action' + data.actions.length))
+    data.actions = data.children = data.children || []
     data.children.push(action)
     this.currentAction = action
     node.expand()
   }
 
   remove(node: any, data: any) {
-    const children = node.parent.data.actions
+    const children = node.parent.data.children
+    console.log(children.indexOf(data), 1)
     children.splice(children.indexOf(data), 1)
   }
 }

@@ -51,7 +51,7 @@ export class ComponentTree {
 
   add(newIndex: number): void {
     const dragData = dragdropHandler.getdragData()
-    const candrop = dragdropHandler.candrop
+    console.log(dragData)
     if (dragData && dragData.component.list) {
       const item = dragData.component.list[newIndex]
       const uuid = item.type.replace('di-', '')
@@ -60,7 +60,7 @@ export class ComponentTree {
         type: item.type,
         level: item.level,
         attrs: getDefaultAttrs(item.type),
-        children: []
+        children: item.children || []
       })
       dragData.component.list.splice(newIndex, 1, newMetadata)
     }

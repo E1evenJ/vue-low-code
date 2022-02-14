@@ -29,7 +29,8 @@ import {
   ElTag,
   ElDescriptions,
   ElDescriptionsItem,
-  ElMessage
+  ElMessage,
+  ElDivider
 } from 'element-plus'
 import 'element-plus/es/components/base/style/css'
 import 'element-plus/es/components/button/style/css'
@@ -61,6 +62,7 @@ import 'element-plus/es/components/tag/style/css'
 import 'element-plus/es/components/descriptions/style/css'
 import 'element-plus/es/components/descriptions-item/style/css'
 import 'element-plus/es/components/message/style/css'
+import 'element-plus/es/components/divider/style/css'
 
 const element = {
   install: function (vue: { use: (item: any) => void }): void {
@@ -94,6 +96,7 @@ const element = {
     vue.use(ElDescriptions)
     vue.use(ElDescriptionsItem)
     vue.use(ElMessage)
+    vue.use(ElDivider)
   }
 }
 export default element

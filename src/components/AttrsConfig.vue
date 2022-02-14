@@ -42,7 +42,7 @@ export default class AttrsConfig extends Vue {
     const clazzName = attrDesc.constructor.name
     const modelFiledName = camel2Kebab(clazzName)
     const render = getAttrRender(attrDesc.renderType)
-    const attrComponent = render && render(attrDesc, attrs, modelFiledName)
+    const attrComponent = render && render(attrDesc, attrs, modelFiledName, this)
     return h('div', { class: 'attr-item' }, [h('span', { class: 'label' }, attrDesc.value), attrComponent])
   }
 }
