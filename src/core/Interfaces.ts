@@ -76,6 +76,7 @@ export interface IPageMetadata {
   props: IProp[]
   data: IData[]
   apis: IApi[]
+  css: string
 }
 
 export interface ILifecycle {

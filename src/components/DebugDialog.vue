@@ -102,6 +102,7 @@ export default class DebugDialog extends Vue {
     this.defineComponentConfig = interpreter.generateDefineComponent(script)
     this.metadata.template = html_beautify(this.defineComponentConfig.template as string, { indent_size: 2 })
     this.metadata.script = js_beautify(`export default ${script}`, { indent_size: 2 })
+    this.metadata.css = css_beautify(designer.pageMetadata.css)
   }
 
   rightFullscreen() {
@@ -133,9 +134,6 @@ export default class DebugDialog extends Vue {
 
   scriptMounted(editor: any) {
     this.scriptEditor = editor
-    // setTimeout(() => {
-    //   editor.getAction(['editor.action.formatDocument'])._run()
-    // }, 100)
   }
 }
 </script>

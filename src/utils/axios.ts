@@ -10,6 +10,7 @@ import router from '../router'
 // }
 
 const tip = (msg: string) => {
+  console.log(msg)
   // alert({
   //   message: msg,
   //   duration: 1000,

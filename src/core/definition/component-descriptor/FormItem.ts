@@ -17,8 +17,7 @@ import {
   IComponentDescriptor,
   IComponentMetadata,
   IEventDescreptor,
-  IMenu,
-  IPageMetadata
+  IMenu
 } from '../../Interfaces'
 import { attr2AttrStr } from '@/utils/component-util'
 

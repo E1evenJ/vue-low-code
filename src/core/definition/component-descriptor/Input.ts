@@ -12,15 +12,13 @@ import {
 } from '../AttributeDescreptor'
 import { BlurE, ChangeE, ClickE, DoubleClickE, FocusE, InputE, KeydownE, KeyUpE } from '../EventDescreptor'
 import {
-  IAction,
   IAttributeDescreptor,
   IComponentDescriptor,
   IComponentMetadata,
   IEventDescreptor,
-  IMenu,
-  IPageMetadata
+  IMenu
 } from '../../Interfaces'
-import { attr2AttrStr, eventsToHtml, invokeAction2Str } from '@/utils/component-util'
+import { attr2AttrStr, eventsToHtml } from '@/utils/component-util'
 
 export default class Input implements IComponentDescriptor {
   static menu = {

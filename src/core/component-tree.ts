@@ -1,7 +1,7 @@
 // import { resolveComponent, TransitionGroup, h, ConcreteComponent } from 'vue';
 // import { VueDraggableNext } from 'vue-draggable-next';
 
-import { nextTick, reactive } from 'vue'
+import { reactive } from 'vue'
 import { cloneDeep } from '@/utils/common'
 import { getDefaultAttrs } from './definition/ComponentDescriptorFactory'
 import { IComponentMetadata } from './Interfaces'

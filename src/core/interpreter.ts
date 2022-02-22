@@ -1,7 +1,5 @@
 import {
   IAction,
-  IActionApi,
-  IActionMethod,
   IApi,
   IComponentMetadata,
   IData,
@@ -13,7 +11,7 @@ import {
   IWatch
 } from './Interfaces'
 import { ComponentOptionsWithoutProps, ComponentPropsOptions } from 'vue'
-import { ActionTypeEnum, DataTypeEnum, DefaultEnum } from '@/utils/enums'
+import { DataTypeEnum, DefaultEnum } from '@/utils/enums'
 import { getComponentDescriptor } from './definition/ComponentDescriptorFactory'
 import { getInvokeMethods, invokeAction2Str, invokeMethod } from '@/utils/component-util'
 
@@ -96,6 +94,7 @@ export class Interpreter {
   }
 
   generateWatched(watches: IWatch[]) {
+    console.log(watches)
     return `watch: {}`
   }
 

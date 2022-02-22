@@ -16,7 +16,8 @@ class Designer extends Object {
       methodGroups: [],
       props: [],
       data: [],
-      apis: []
+      apis: [],
+      css: ''
     } as IPageMetadata)
     pageMetadata && Object.assign(this.pageMetadata, pageMetadata)
     this.componentMetadatas = componentMetadatas || []

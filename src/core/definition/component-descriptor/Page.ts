@@ -5,8 +5,7 @@ import {
   IComponentDescriptor,
   IComponentMetadata,
   IEventDescreptor,
-  IMenu,
-  IPageMetadata
+  IMenu
 } from '../../Interfaces'
 import { randomName } from '@/utils/common'
 
