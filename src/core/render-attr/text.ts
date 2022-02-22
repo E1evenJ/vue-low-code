@@ -1,5 +1,5 @@
 import { h } from 'vue'
-import { IAttributeDescreptor } from '../definition/Interfaces'
+import { IAttributeDescreptor } from '../Interfaces'
 import { RenderTypeEnum } from '@/utils/enums'
 
 function text(attrDesc: IAttributeDescreptor, attrs: any, modelFiledName: string) {

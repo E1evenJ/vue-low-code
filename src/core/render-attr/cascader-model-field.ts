@@ -1,6 +1,5 @@
 import { h, resolveComponent } from 'vue'
-import { bindModel } from '@/utils/common'
-import { IAttributeDescreptor } from '../definition/Interfaces'
+import { IAttributeDescreptor } from '../Interfaces'
 import designer from '../designer'
 import { RenderTypeEnum } from '@/utils/enums'
 import { dataSelect } from '@/utils/attr-util'

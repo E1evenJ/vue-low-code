@@ -20,7 +20,7 @@
 </template>
 
 <script lang="ts">
-import { IAction, ISelect } from '@/core/definition/Interfaces'
+import { IAction, ISelect } from '@/core/Interfaces'
 import designer from '@/core/designer'
 import { methodSelect } from '@/utils/attr-util'
 import { Options, Vue } from 'vue-class-component'

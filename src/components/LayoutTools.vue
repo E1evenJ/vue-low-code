@@ -2,10 +2,10 @@
   <div v-if="showTools" class="layout-tools-box">
     <teleport :to="teleportTo">
       <div class="layout-tools">
-        <el-icon v-show="desc?.tools.includes(Tools.PLUS)" @click.stop="plus"><plus /></el-icon>
-        <el-icon v-show="desc?.tools.includes(Tools.SETTING)" @click.stop="setting"><setting /></el-icon>
-        <el-icon v-show="desc?.tools.includes(Tools.DELETE)" @click.stop="remove"><delete /></el-icon>
-        <el-icon v-show="desc?.tools.includes(Tools.COPY)" @click.stop="copy"><document-copy /></el-icon>
+        <el-icon v-show="compDesc?.tools.includes(Tools.PLUS)" @click.stop="plus"><plus /></el-icon>
+        <el-icon v-show="compDesc?.tools.includes(Tools.SETTING)" @click.stop="setting"><setting /></el-icon>
+        <el-icon v-show="compDesc?.tools.includes(Tools.DELETE)" @click.stop="remove"><delete /></el-icon>
+        <el-icon v-show="compDesc?.tools.includes(Tools.COPY)" @click.stop="copy"><document-copy /></el-icon>
       </div>
     </teleport>
   </div>
@@ -16,9 +16,9 @@ import { dialogProxy } from '@/utils/dialog'
 import { ToolType } from '@/utils/enums'
 import { Options, Vue } from 'vue-class-component'
 import ActionDialog from './ActionDialog.vue'
-import { IComponentMetadata, IDescriptor } from '@/core/definition/Interfaces'
+import { IComponentDescriptor, IComponentMetadata } from '@/core/Interfaces'
 import designer from '@/core/designer'
-import { getComponentDescriptor } from '@/core/definition/DescriptorFactory'
+import { getComponentDescriptor } from '@/core/definition/ComponentDescriptorFactory'
 import PlusDialog from './PlusDialog.vue'
 
 @Options({
@@ -30,14 +30,14 @@ export default class LayoutTools extends Vue {
   Tools = ToolType
   settingDialog: any
   plusDialog: any
-  desc: IDescriptor | null = null
+  compDesc: IComponentDescriptor | null = null
   showTools = false
   teleportTo = ''
   mounted() {
     designer.treeHandler.onSelectedComponentChange((metadata: IComponentMetadata | null, el: HTMLElement | null) => {
       this.showTools = false
       this.metadata = metadata
-      if (metadata) this.desc = getComponentDescriptor(metadata.type)
+      if (metadata) this.compDesc = getComponentDescriptor(metadata.type)
       this.el = el
       // if (el) {
       //   const { left, top, width } = el.getBoundingClientRect()

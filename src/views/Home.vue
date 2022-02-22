@@ -17,9 +17,9 @@ import Header from '@/components/Header.vue'
 import { Options, Vue } from 'vue-class-component'
 import designer from '@/core/designer'
 import { ComponentLevelEnum, ComponentTypeEnum } from '@/utils/enums'
-import { IComponentMetadata } from '@/core/definition/Interfaces'
+import { IComponentMetadata } from '@/core/Interfaces'
 import { reactive } from 'vue-demi'
-import { getDefaultAttrs } from '@/core/definition/DescriptorFactory'
+import { getDefaultAttrs } from '@/core/definition/ComponentDescriptorFactory'
 
 @Options({
   components: {

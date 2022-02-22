@@ -1,20 +1,44 @@
 import { ComponentLevelEnum, ComponentTypeEnum, ToolType } from '@/utils/enums'
 import { Uuid } from '../AttributeDescreptor'
-import { IAttributeDescreptor, IDescriptor, IEventDescreptor } from '../Interfaces'
+import {
+  IAttributeDescreptor,
+  IComponentDescriptor,
+  IComponentMetadata,
+  IEventDescreptor,
+  IMenu
+} from '../../Interfaces'
+import { randomName } from '@/utils/common'
 
-export default class Page implements IDescriptor {
-  static uuid = 'component_page'
-  static label = 'Page'
-  static type = ComponentTypeEnum.FORM
-  static level = ComponentLevelEnum.ADVANCE
-  static icon = ''
-  static enable = false
-  tools: ToolType[]
-  attrDescs: IAttributeDescreptor[]
-  eventDescs: IEventDescreptor[]
-  constructor() {
-    this.attrDescs = [new Uuid()]
-    this.eventDescs = []
-    this.tools = []
+export default class Page implements IComponentDescriptor {
+  static menu = {
+    uuid: 'component_page',
+    label: 'Page',
+    type: ComponentTypeEnum.PANEL,
+    level: ComponentLevelEnum.LAYOUT,
+    icon: 'icon-rongqi',
+    enable: false
+  }
+  static attrDescs = [new Uuid()]
+  static eventDescs = []
+  static tools = []
+  get menu(): IMenu {
+    return Page.menu
+  }
+  get attrDescs(): IAttributeDescreptor[] {
+    return Page.attrDescs
+  }
+  get eventDescs(): IEventDescreptor[] {
+    return Page.eventDescs
+  }
+  get tools(): ToolType[] {
+    return Page.tools
+  }
+
+  defaultAttrs = { span: 24 }
+  getHtml(meta: IComponentMetadata, content: string): string {
+    return `<div class="page-${randomName()} el-row">${content}</div>`
+  }
+  getScript(meta: IComponentMetadata): string {
+    throw new Error('Method not implemented.')
   }
 }

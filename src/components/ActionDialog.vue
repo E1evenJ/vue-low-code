@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts">
-import { IComponentMetadata } from '@/core/definition/Interfaces'
+import { IComponentMetadata } from '@/core/Interfaces'
 import { Options, Vue } from 'vue-class-component'
 import ActionApi from './ActionApi.vue'
 import ActionComponent from './ActionComponent.vue'

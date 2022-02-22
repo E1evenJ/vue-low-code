@@ -3,8 +3,8 @@
 
 import { nextTick, reactive } from 'vue'
 import { cloneDeep } from '@/utils/common'
-import { getDefaultAttrs } from './definition/DescriptorFactory'
-import { IComponentMetadata } from './definition/Interfaces'
+import { getDefaultAttrs } from './definition/ComponentDescriptorFactory'
+import { IComponentMetadata } from './Interfaces'
 import { dragdropHandler } from '@/utils/dragdrop-handler'
 import { ComponentLevelEnum } from '@/utils/enums'
 import { indexHandler } from '@/utils/index-hanlder'
@@ -51,18 +51,19 @@ export class ComponentTree {
 
   add(newIndex: number): void {
     const dragData = dragdropHandler.getdragData()
-    console.log(dragData)
     if (dragData && dragData.component.list) {
       const item = dragData.component.list[newIndex]
-      const uuid = item.type.replace('di-', '')
-      const newMetadata = reactive({
-        uuid: `${uuid}_${indexHandler.plusCount(item.type)}`,
-        type: item.type,
-        level: item.level,
-        attrs: getDefaultAttrs(item.type),
-        children: item.children || []
-      })
-      dragData.component.list.splice(newIndex, 1, newMetadata)
+      if (item.isMenu) {
+        const uuid = item.type.replace('di-', '')
+        const newMetadata = reactive({
+          uuid: `${uuid}_${indexHandler.plusCount(item.type)}`,
+          type: item.type,
+          level: item.level,
+          attrs: getDefaultAttrs(item.type),
+          children: item.children || []
+        })
+        dragData.component.list.splice(newIndex, 1, newMetadata)
+      }
     }
   }
 

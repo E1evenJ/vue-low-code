@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-import { getComponentDescriptor } from '@/core/definition/DescriptorFactory'
+import { getComponentDescriptor } from '@/core/definition/ComponentDescriptorFactory'
 import { ComponentTypeEnum } from '@/utils/enums'
 import { Options, Vue } from 'vue-class-component'
 
@@ -28,11 +28,11 @@ import { Options, Vue } from 'vue-class-component'
 export default class FormItem extends Vue {
   declare type: ComponentTypeEnum
   get draggable() {
-    return getComponentDescriptor(this.type).draggable
+    return getComponentDescriptor(this.type).menu.draggable
   }
 
   get droppable() {
-    return getComponentDescriptor(this.type).droppable
+    return getComponentDescriptor(this.type).menu.droppable
   }
 }
 </script>

@@ -1,5 +1,5 @@
-import { IComponentMetadata } from '@/core/definition/Interfaces'
 import designer from '@/core/designer'
+import { IComponentMetadata } from '@/core/Interfaces'
 import { ComponentTypeEnum } from '@/utils/enums'
 
 class IndexHandler {

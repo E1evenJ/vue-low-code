@@ -6,7 +6,7 @@
 </template>
 
 <script lang="ts">
-import { IComponentMetadata } from '@/core/definition/Interfaces'
+import { IComponentMetadata } from '@/core/Interfaces'
 import { Options, Vue } from 'vue-class-component'
 import LayoutTools from './LayoutTools.vue'
 import NestedDraggable from './NestedDraggable.vue'

@@ -12,43 +12,65 @@ import {
   Span,
   Uuid
 } from '../AttributeDescreptor'
-import { IAttributeDescreptor, IDescriptor, IEventDescreptor } from '../Interfaces'
+import {
+  IAttributeDescreptor,
+  IComponentDescriptor,
+  IComponentMetadata,
+  IEventDescreptor,
+  IMenu
+} from '../../Interfaces'
+import { attr2AttrStr } from '@/utils/attr-util'
 
-export default class FormItem implements IDescriptor {
-  static uuid = 'component_form_item'
-  static label = '表单项'
-  static type = ComponentTypeEnum.FORM_ITEM
-  static level = ComponentLevelEnum.ADVANCE
-  static icon = 'icon-zujian'
-  static draggable = ['+', 'form']
-  static droppable = ['-', 'form', 'form-item', 'panel']
-  tools: ToolType[]
-  attrDescs: IAttributeDescreptor[]
-  eventDescs: IEventDescreptor[]
+export default class FormItem implements IComponentDescriptor {
+  static menu = {
+    uuid: 'component_form_item',
+    label: '表单项',
+    type: ComponentTypeEnum.FORM_ITEM,
+    level: ComponentLevelEnum.ADVANCE,
+    icon: 'icon-zujian',
+    draggable: ['+', 'form'],
+    droppable: ['-', 'form', 'form-item', 'panel']
+  }
+  static attrDescs = [
+    new Uuid(),
+    new Span(),
+    new Size(),
+    new Label(),
+    new ModelField(),
+    new LabelWidth(),
+    new Required(),
+    new Rule(),
+    new ShowMessage(),
+    new InlineMessage(),
+    new Disabled()
+  ]
+  static eventDescs = []
+  static tools = [ToolType.COPY, ToolType.DELETE]
+  get menu(): IMenu {
+    return FormItem.menu
+  }
+  get attrDescs(): IAttributeDescreptor[] {
+    return FormItem.attrDescs
+  }
+  get eventDescs(): IEventDescreptor[] {
+    return FormItem.eventDescs
+  }
+  get tools(): ToolType[] {
+    return FormItem.tools
+  }
+
   defaultAttrs = { span: 6 }
-  get draggable() {
-    return FormItem.draggable
+  getHtml(meta: IComponentMetadata, content: string): string {
+    console.log(meta)
+    return `<el-form-item class="el-col-${meta.attrs?.span} el-row ${meta.attrs?.class}"${attr2AttrStr(
+      ':label',
+      meta.attrs?.label
+    )}${attr2AttrStr(':label-width', meta?.attrs['label-width'])}${attr2AttrStr(
+      ':size',
+      meta.attrs?.size
+    )}>${content}</el-form-item>`
   }
-
-  get droppable() {
-    return FormItem.droppable
-  }
-
-  constructor() {
-    this.tools = [ToolType.COPY, ToolType.DELETE]
-    this.attrDescs = [
-      new Uuid(),
-      new Span(),
-      new Size(),
-      new Label(),
-      new ModelField(),
-      new LabelWidth(),
-      new Required(),
-      new Rule(),
-      new ShowMessage(),
-      new InlineMessage(),
-      new Disabled()
-    ]
-    this.eventDescs = []
+  getScript(meta: IComponentMetadata): string {
+    throw new Error('Method not implemented.')
   }
 }

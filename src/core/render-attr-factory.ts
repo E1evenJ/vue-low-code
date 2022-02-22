@@ -1,5 +1,5 @@
 import { VNode } from 'vue'
-import { IAttributeDescreptor } from './definition/Interfaces'
+import { IAttributeDescreptor } from './Interfaces'
 import { RenderTypeEnum } from '@/utils/enums'
 
 const files = require.context('./render-attr', false, /.ts$/) as any

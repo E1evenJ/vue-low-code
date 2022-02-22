@@ -9,6 +9,7 @@ import {
   StoreTypeEnum,
   ToolType
 } from '@/utils/enums'
+import { ComponentOptionsWithObjectProps, VNode } from 'vue'
 
 export interface IEvent {
   name: string
@@ -156,16 +157,29 @@ export interface IEventDescreptor {
   value: string
 }
 
-export interface IDescriptor {
-  tools: ToolType[]
-  attrDescs: IAttributeDescreptor[]
-  eventDescs: IEventDescreptor[]
-  defaultAttrs?: any
-  draggable?: string[]
-  droppable?: string[]
-}
-
 export interface ISelect {
   label: string
   value: string
+}
+
+export interface IComponentDescriptor {
+  get menu(): IMenu
+  get attrDescs(): IAttributeDescreptor[]
+  get eventDescs(): IEventDescreptor[]
+  get tools(): ToolType[]
+  defaultAttrs?: { [key: string]: any }
+  // designerRender({ $slots }: { $slots: any }): ComponentOptionsWithObjectProps
+  getHtml(meta: IComponentMetadata, content?: string): string
+  getScript(meta: IComponentMetadata): string
+}
+
+export interface IMenu {
+  uuid: string
+  label: string
+  type: ComponentTypeEnum
+  level: ComponentLevelEnum
+  icon: string
+  enable?: boolean
+  draggable?: string[]
+  droppable?: string[]
 }

@@ -1,6 +1,6 @@
 import { reactive } from 'vue'
 import { ComponentTree } from './component-tree'
-import { IComponentMetadata, ILifecycle, IPageMetadata } from './definition/Interfaces'
+import { IComponentMetadata, ILifecycle, IPageMetadata } from './Interfaces'
 
 class Designer extends Object {
   pageMetadata!: IPageMetadata

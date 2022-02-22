@@ -11,10 +11,10 @@ import {
   IPageMetadata,
   IProp,
   IWatch
-} from './definition/Interfaces'
-import { ComponentOptionsWithoutProps, ComponentPropsOptions, defineComponent } from 'vue'
-import { ActionTypeEnum, ComponentTypeEnum, DataTypeEnum, DefaultEnum } from '@/utils/enums'
-import { randomName } from '@/utils/common'
+} from './Interfaces'
+import { ComponentOptionsWithoutProps, ComponentPropsOptions } from 'vue'
+import { ActionTypeEnum, DataTypeEnum, DefaultEnum } from '@/utils/enums'
+import { getComponentDescriptor } from './definition/ComponentDescriptorFactory'
 
 export class Interpreter {
   pageMetadata: IPageMetadata
@@ -78,43 +78,12 @@ export class Interpreter {
 
   generateTemplage(componentMetadata: IComponentMetadata[]) {
     let template = ''
-    componentMetadata.forEach((element: IComponentMetadata) => {
-      const content = this.generateTemplage(element.children)
-      template += this._render(element, content)
+    componentMetadata.forEach((meta: IComponentMetadata) => {
+      const content = this.generateTemplage(meta.children)
+      const compDesc = getComponentDescriptor(meta.type)
+      console.log(compDesc.getHtml(meta, content))
+      template += compDesc.getHtml(meta, content)
     })
-    return template
-  }
-
-  private _render(element: IComponentMetadata, content: string) {
-    console.log(element)
-    let template = ''
-    switch (element.type) {
-      case ComponentTypeEnum.PAGE: {
-        template += `<div class="page-${randomName()}">${content}</div>`
-        break
-      }
-      case ComponentTypeEnum.PANEL: {
-        template += `<div class="el-row">${content}</div>`
-        break
-      }
-      case ComponentTypeEnum.FORM: {
-        template += `<el-form>${content}</el-form>`
-        break
-      }
-      case ComponentTypeEnum.FORM_ITEM: {
-        template += `<el-form-item ${element.attrs?.label ? ':label="' + element.attrs?.label + '"' : ''}${
-          element?.attrs['label-width'] ? ' :label-width="' + element.attrs['label-width'] + '"' : ''
-        } :size="${element.attrs?.size}">${content}</el-form-item>`
-        break
-      }
-      case ComponentTypeEnum.INPUT: {
-        console.log(element.attrs)
-        template += `<el-input${
-          element.attrs['model-field_path'] ? ' v-model="' + element.attrs['model-field_path'].join('.') + '"' : ''
-        }${element.attrs.placeholder ? ' placeholder="' + element.attrs.placeholder + '"' : ''}></el-input>`
-        break
-      }
-    }
     return template
   }
 
@@ -206,7 +175,6 @@ export class Interpreter {
     let str = ''
     const api = this.pageMetadata.apis.find(item => item.id === apiId)
     if (api) {
-      console.log(api)
       switch (api?.method) {
         case 'GET': {
           str += `this.axios.get('${api.url}', {params: this.${api.request?.name}}).then(data => {this.${(

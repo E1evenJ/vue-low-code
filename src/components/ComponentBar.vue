@@ -97,7 +97,7 @@
 import { Options, Vue } from 'vue-class-component'
 import { VueDraggableNext } from 'vue-draggable-next'
 import { dragdropHandler } from '@/utils/dragdrop-handler'
-import { componentDescriptors } from '@/core/definition/DescriptorFactory'
+import { componentDescriptors } from '@/core/definition/ComponentDescriptorFactory'
 import { ComponentLevelEnum } from '@/utils/enums'
 
 @Options({
@@ -115,7 +115,12 @@ export default class ComponentBar extends Vue {
 
   mounted() {
     componentDescriptors.forEach(item => {
-      item.enable !== false && this.tools.push(item)
+      if (item.menu.enable !== false) {
+        const tool = { ...item.menu, isMenu: true }
+        item.menu.draggable && (tool.draggable = item.menu.draggable.join(','))
+        item.menu.droppable && (tool.droppable = item.menu.droppable.join(','))
+        this.tools.push(tool)
+      }
     })
     this.layoutTools = this.tools.filter(item => item.level === ComponentLevelEnum.LAYOUT)
     this.commonTools = this.tools.filter(item => item.level === ComponentLevelEnum.COMMON)

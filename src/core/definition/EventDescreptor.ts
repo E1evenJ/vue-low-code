@@ -1,4 +1,4 @@
-import { IEventDescreptor } from './Interfaces'
+import { IEventDescreptor } from '../Interfaces'
 
 export class ClickE implements IEventDescreptor {
   key = 'click'

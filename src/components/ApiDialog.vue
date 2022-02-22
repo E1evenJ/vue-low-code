@@ -22,7 +22,7 @@
 
 <script lang="ts">
 import { uuid } from '@/utils/common'
-import { IApi, IServiceCategory } from '@/core/definition/Interfaces'
+import { IApi, IServiceCategory } from '@/core/Interfaces'
 import designer from '@/core/designer'
 import { DataTypeEnum, MethodEnum } from '@/utils/enums'
 import { ElMessage } from 'element-plus'

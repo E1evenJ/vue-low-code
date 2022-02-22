@@ -1,5 +1,5 @@
 import { RenderTypeEnum } from '@/utils/enums'
-import { IAttributeDescreptor } from './Interfaces'
+import { IAttributeDescreptor } from '../Interfaces'
 
 export class Uuid implements IAttributeDescreptor {
   value = '组件编号'

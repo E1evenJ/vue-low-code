@@ -1,6 +1,6 @@
 import { h, resolveComponent } from 'vue'
 import { bindModel } from '@/utils/common'
-import { IAttributeDescreptor } from '../definition/Interfaces'
+import { IAttributeDescreptor } from '../Interfaces'
 import { RenderTypeEnum } from '@/utils/enums'
 
 function slider(attrDesc: IAttributeDescreptor, attrs: any, modelFiledName: string) {

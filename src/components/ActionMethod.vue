@@ -79,7 +79,7 @@ import { reactive } from 'vue-demi'
 import { ref } from 'vue'
 
 import MonacoEditor from 'monaco-editor-vue3'
-import { IAction, IMethodGroup, IMethod } from '@/core/definition/Interfaces'
+import { IAction, IMethodGroup, IMethod } from '@/core/Interfaces'
 import designer from '@/core/designer'
 import { newAction } from '@/utils/attr-util'
 

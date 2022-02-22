@@ -13,11 +13,13 @@ class DragDropHandler {
   enable(from: HTMLElement, to: HTMLElement) {
     const draggable = from.dataset.draggable as string
     let canDrop = true
+    console.log(draggable)
     if (draggable) {
       const draggableArr = draggable.split(',')
       const enable = draggableArr.shift()
       if (enable === '+') {
         for (const item of draggableArr) {
+          console.log(111, to.classList, item)
           canDrop = to.classList.contains(item) || to.classList.contains(`di-${item}`)
           if (canDrop === false) {
             break
@@ -33,27 +35,34 @@ class DragDropHandler {
       } else {
         canDrop = true
       }
-    }
-    const droppable = to.parentElement?.dataset.droppable as string
-    if (droppable) {
-      const dpoppableArr = droppable.split(',')
-      const enable = dpoppableArr.shift()
-      if (enable === '+') {
-        for (const item of dpoppableArr) {
-          canDrop = to.classList.contains(item) || to.classList.contains(`di-${item}`)
-          if (canDrop === false) {
-            break
+    } else {
+      const droppable = to.parentElement?.dataset.droppable as string
+      if (droppable) {
+        const dpoppableArr = droppable.split(',')
+        const enable = dpoppableArr.shift()
+        if (enable === '+') {
+          for (const item of dpoppableArr) {
+            console.log(333, to.classList, item)
+            canDrop = from.classList.contains(item) || from.classList.contains(`di-${item}`)
+            if (canDrop === false) {
+              break
+            }
           }
-        }
-      } else if (enable === '-') {
-        for (const item of dpoppableArr) {
-          canDrop = !(to.parentElement?.classList.contains(item) || to.parentElement?.classList.contains(`di-${item}`))
-          if (canDrop === false) {
-            break
+        } else if (enable === '-') {
+          console.log(444, dpoppableArr)
+          for (const item of dpoppableArr) {
+            console.log(444, from.parentElement?.classList, item)
+            canDrop = !(
+              from.parentElement?.classList.contains(item) || from.parentElement?.classList.contains(`di-${item}`)
+            )
+            if (canDrop === false) {
+              break
+            }
           }
         }
       }
     }
+
     return canDrop
   }
 }

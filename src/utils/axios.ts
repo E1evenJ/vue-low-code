@@ -11,11 +11,11 @@ import router from '../router'
 // }
 
 const tip = (msg: string) => {
-  alert({
-    message: msg,
-    duration: 1000,
-    forbidClick: true
-  })
+  // alert({
+  //   message: msg,
+  //   duration: 1000,
+  //   forbidClick: true
+  // })
 }
 
 const toLogin = () => {

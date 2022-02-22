@@ -20,7 +20,7 @@
 
 <script lang="ts">
 import { ActionComponentConst, ActionNameConst, ActionTypeConst } from '@/utils/const'
-import { IAction } from '@/core/definition/Interfaces'
+import { IAction } from '@/core/Interfaces'
 import { Options, Vue } from 'vue-class-component'
 
 const components: any = {}

@@ -1,4 +1,4 @@
-import { IAction, IPageMetadata } from '@/core/definition/Interfaces'
+import { IAction, IPageMetadata } from '@/core/Interfaces'
 import { ActionNameConst, ActionComponentConst } from './const'
 import { ActionTypeEnum, StoreTypeEnum } from './enums'
 
@@ -38,4 +38,8 @@ export function newAction(name: string): IAction {
     actionComponent: ActionComponentConst[ActionTypeEnum.METHOD].name,
     value: { hasReturn: false, storeReturnVal: StoreTypeEnum.CONTEXT }
   }
+}
+
+export function attr2AttrStr(key: string, value: string) {
+  return value ? ` ${key}="${value}"` : ''
 }

@@ -34,7 +34,7 @@
 </template>
 
 <script lang="ts">
-import { IAction } from '@/core/definition/Interfaces'
+import { IAction } from '@/core/Interfaces'
 import designer from '@/core/designer'
 import { isReactive, reactive } from 'vue'
 import { Options, Vue } from 'vue-class-component'

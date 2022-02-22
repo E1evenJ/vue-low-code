@@ -31,8 +31,8 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import ActionTemplate from './ActionTemplate.vue'
-import { IAction, IComponentMetadata, IEvent, IEventDescreptor } from '@/core/definition/Interfaces'
-import { getComponentDescriptor } from '@/core/definition/DescriptorFactory'
+import { IAction, IComponentMetadata, IEvent, IEventDescreptor } from '@/core/Interfaces'
+import { getComponentDescriptor } from '@/core/definition/ComponentDescriptorFactory'
 import { newAction } from '@/utils/attr-util'
 
 @Options({
@@ -59,8 +59,8 @@ export default class ActionComponent extends Vue {
 
   init(metadata: IComponentMetadata) {
     metadata.events = metadata.events || []
-    const desc = getComponentDescriptor(metadata.type)
-    this.eventsTree = desc.eventDescs.map<IEvent>((item: IEventDescreptor) => {
+    const compDesc = getComponentDescriptor(metadata.type)
+    this.eventsTree = compDesc.eventDescs.map((item: IEventDescreptor) => {
       const event = this.metadata.events?.find(event => event.name === item.key)
       if (event) {
         event.isRoot = true

@@ -2,9 +2,9 @@
 import { Options, Vue } from 'vue-class-component'
 import { h } from 'vue'
 import { RenderTypeEnum } from '@/utils/enums'
-import { IAttributeDescreptor, IComponentMetadata } from '@/core/definition/Interfaces'
+import { IAttributeDescreptor, IComponentMetadata } from '@/core/Interfaces'
 import designer from '@/core/designer'
-import { getComponentDescriptor } from '@/core/definition/DescriptorFactory'
+import { getComponentDescriptor } from '@/core/definition/ComponentDescriptorFactory'
 import { camel2Kebab } from '@/utils/common'
 import { getAttrRender } from '@/core/render-attr-factory'
 
@@ -24,11 +24,11 @@ export default class AttrsConfig extends Vue {
   render() {
     if (this.componentMetaData && this.componentMetaData.type) {
       const componentMetaData = this.componentMetaData
-      const desc = getComponentDescriptor(componentMetaData.type)
+      const compDesc = getComponentDescriptor(componentMetaData.type)
       return h(
         'div',
         {},
-        desc.attrDescs.map((attrDesc: IAttributeDescreptor) => {
+        compDesc.attrDescs.map((attrDesc: IAttributeDescreptor) => {
           componentMetaData.attrs.uuid = componentMetaData.uuid
           return this.renderAttrItem(attrDesc, componentMetaData.attrs)
         })
