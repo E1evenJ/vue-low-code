@@ -27,7 +27,6 @@ export function getDefaultAttrs(type: ComponentTypeEnum) {
   compDesc.attrDescs.forEach((attrDesc: IAttributeDescreptor) => {
     const field = camel2Kebab(attrDesc.constructor.name)
     defaultAttrs[field] = attrDesc.default
-    console.log(compDesc)
     compDesc.defaultAttrs && (defaultAttrs[field] = compDesc.defaultAttrs[field])
   })
 

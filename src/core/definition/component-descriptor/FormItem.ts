@@ -17,9 +17,10 @@ import {
   IComponentDescriptor,
   IComponentMetadata,
   IEventDescreptor,
-  IMenu
+  IMenu,
+  IPageMetadata
 } from '../../Interfaces'
-import { attr2AttrStr } from '@/utils/attr-util'
+import { attr2AttrStr } from '@/utils/component-util'
 
 export default class FormItem implements IComponentDescriptor {
   static menu = {
@@ -61,7 +62,6 @@ export default class FormItem implements IComponentDescriptor {
 
   defaultAttrs = { span: 6 }
   getHtml(meta: IComponentMetadata, content: string): string {
-    console.log(meta)
     return `<el-form-item class="el-col-${meta.attrs?.span} el-row ${meta.attrs?.class}"${attr2AttrStr(
       ':label',
       meta.attrs?.label
@@ -69,8 +69,5 @@ export default class FormItem implements IComponentDescriptor {
       ':size',
       meta.attrs?.size
     )}>${content}</el-form-item>`
-  }
-  getScript(meta: IComponentMetadata): string {
-    throw new Error('Method not implemented.')
   }
 }

@@ -81,7 +81,7 @@ import { ref } from 'vue'
 import MonacoEditor from 'monaco-editor-vue3'
 import { IAction, IMethodGroup, IMethod } from '@/core/Interfaces'
 import designer from '@/core/designer'
-import { newAction } from '@/utils/attr-util'
+import { newAction } from '@/utils/component-util'
 
 @Options({
   components: {

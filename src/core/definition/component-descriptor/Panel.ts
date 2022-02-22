@@ -5,7 +5,8 @@ import {
   IComponentDescriptor,
   IComponentMetadata,
   IEventDescreptor,
-  IMenu
+  IMenu,
+  IPageMetadata
 } from '../../Interfaces'
 
 export default class Panel implements IComponentDescriptor {
@@ -35,8 +36,5 @@ export default class Panel implements IComponentDescriptor {
   defaultAttrs = { span: 24 }
   getHtml(meta: IComponentMetadata, content: string): string {
     return `<div class="el-row el-col-${meta.attrs?.span} ${meta.attrs?.class}">${content}</div>`
-  }
-  getScript(meta: IComponentMetadata): string {
-    throw new Error('Method not implemented.')
   }
 }

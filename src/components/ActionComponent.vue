@@ -33,7 +33,7 @@ import { Options, Vue } from 'vue-class-component'
 import ActionTemplate from './ActionTemplate.vue'
 import { IAction, IComponentMetadata, IEvent, IEventDescreptor } from '@/core/Interfaces'
 import { getComponentDescriptor } from '@/core/definition/ComponentDescriptorFactory'
-import { newAction } from '@/utils/attr-util'
+import { newAction } from '@/utils/component-util'
 
 @Options({
   components: {

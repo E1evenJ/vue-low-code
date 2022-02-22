@@ -61,6 +61,7 @@ import Test from './Test.vue'
 import designer from '@/core/designer'
 import { Interpreter } from '@/core/interpreter'
 import { ComponentOptionsWithoutProps } from 'vue'
+import { js_beautify, css_beautify, html_beautify } from 'js-beautify'
 
 @Options({
   components: {
@@ -99,8 +100,8 @@ export default class DebugDialog extends Vue {
     const interpreter = new Interpreter(designer.pageMetadata, designer.componentMetadatas)
     const script = interpreter.generateScript()
     this.defineComponentConfig = interpreter.generateDefineComponent(script)
-    this.metadata.template = this.defineComponentConfig.template
-    this.metadata.script = `export default ${script}`
+    this.metadata.template = html_beautify(this.defineComponentConfig.template as string, { indent_size: 2 })
+    this.metadata.script = js_beautify(`export default ${script}`, { indent_size: 2 })
   }
 
   rightFullscreen() {
@@ -125,16 +126,16 @@ export default class DebugDialog extends Vue {
 
   templateMounted(editor: any) {
     this.templateEditor = editor
-    setTimeout(() => {
-      editor.getAction(['editor.action.formatDocument'])._run()
-    }, 100)
+    // setTimeout(() => {
+    //   editor.getAction(['editor.action.formatDocument'])._run()
+    // }, 100)
   }
 
   scriptMounted(editor: any) {
     this.scriptEditor = editor
-    setTimeout(() => {
-      editor.getAction(['editor.action.formatDocument'])._run()
-    }, 100)
+    // setTimeout(() => {
+    //   editor.getAction(['editor.action.formatDocument'])._run()
+    // }, 100)
   }
 }
 </script>

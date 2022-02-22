@@ -32,7 +32,7 @@
 <script lang="ts">
 import { IAction } from '@/core/Interfaces'
 import designer from '@/core/designer'
-import { dataSelect } from '@/utils/attr-util'
+import { dataSelect } from '@/utils/component-util'
 import { StoreTypeEnum } from '@/utils/enums'
 import { Options, Vue } from 'vue-class-component'
 

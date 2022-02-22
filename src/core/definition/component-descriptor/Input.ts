@@ -12,13 +12,15 @@ import {
 } from '../AttributeDescreptor'
 import { BlurE, ChangeE, ClickE, DoubleClickE, FocusE, InputE, KeydownE, KeyUpE } from '../EventDescreptor'
 import {
+  IAction,
   IAttributeDescreptor,
   IComponentDescriptor,
   IComponentMetadata,
   IEventDescreptor,
-  IMenu
+  IMenu,
+  IPageMetadata
 } from '../../Interfaces'
-import { attr2AttrStr } from '@/utils/attr-util'
+import { attr2AttrStr, eventsToHtml, invokeAction2Str } from '@/utils/component-util'
 
 export default class Input implements IComponentDescriptor {
   static menu = {
@@ -65,12 +67,12 @@ export default class Input implements IComponentDescriptor {
 
   defaultAttrs = { span: 6 }
   getHtml(meta: IComponentMetadata): string {
-    return `<el-input class="el-col-${meta.attrs?.span} ${meta.attrs?.class}"${attr2AttrStr(
+    return `<el-input class="el-col-${meta.attrs?.span} ${meta.attrs?.class}"${eventsToHtml(
+      meta.uuid,
+      meta.events
+    )}${attr2AttrStr(
       'v-model',
       meta.attrs['model-field_path'] && meta.attrs['model-field_path'].join('.')
     )}${attr2AttrStr('placeholder', meta.attrs.placeholder)}></el-input>`
-  }
-  getScript(meta: IComponentMetadata): string {
-    throw new Error('Method not implemented.')
   }
 }

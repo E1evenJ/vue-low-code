@@ -5,7 +5,8 @@ import {
   IComponentDescriptor,
   IComponentMetadata,
   IEventDescreptor,
-  IMenu
+  IMenu,
+  IPageMetadata
 } from '../../Interfaces'
 import { randomName } from '@/utils/common'
 
@@ -37,8 +38,5 @@ export default class Page implements IComponentDescriptor {
   defaultAttrs = { span: 24 }
   getHtml(meta: IComponentMetadata, content: string): string {
     return `<div class="page-${randomName()} el-row">${content}</div>`
-  }
-  getScript(meta: IComponentMetadata): string {
-    throw new Error('Method not implemented.')
   }
 }

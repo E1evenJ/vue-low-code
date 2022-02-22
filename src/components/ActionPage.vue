@@ -39,7 +39,7 @@ import designer from '@/core/designer'
 import { isReactive, reactive } from 'vue'
 import { Options, Vue } from 'vue-class-component'
 import ActionTemplate from './ActionTemplate.vue'
-import { newAction } from '@/utils/attr-util'
+import { newAction } from '@/utils/component-util'
 
 @Options({
   components: {

@@ -170,7 +170,6 @@ export interface IComponentDescriptor {
   defaultAttrs?: { [key: string]: any }
   // designerRender({ $slots }: { $slots: any }): ComponentOptionsWithObjectProps
   getHtml(meta: IComponentMetadata, content?: string): string
-  getScript(meta: IComponentMetadata): string
 }
 
 export interface IMenu {

@@ -2,7 +2,7 @@ import { h, resolveComponent } from 'vue'
 import { IAttributeDescreptor } from '../Interfaces'
 import designer from '../designer'
 import { RenderTypeEnum } from '@/utils/enums'
-import { dataSelect } from '@/utils/attr-util'
+import { dataSelect } from '@/utils/component-util'
 
 const cascaderModelProxy = (checkStrictly: boolean) => {
   return (attrDesc: IAttributeDescreptor, attrs: any, modelFiledName: string, ctx?: any) => {

@@ -22,7 +22,7 @@
 <script lang="ts">
 import { IAction, ISelect } from '@/core/Interfaces'
 import designer from '@/core/designer'
-import { methodSelect } from '@/utils/attr-util'
+import { methodSelect } from '@/utils/component-util'
 import { Options, Vue } from 'vue-class-component'
 import ValueStore from '../ValueStore.vue'
 

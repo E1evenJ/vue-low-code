@@ -22,7 +22,8 @@ import {
   IComponentDescriptor,
   IComponentMetadata,
   IEventDescreptor,
-  IMenu
+  IMenu,
+  IPageMetadata
 } from '../../Interfaces'
 
 export default class Form implements IComponentDescriptor {
@@ -71,8 +72,5 @@ export default class Form implements IComponentDescriptor {
   defaultAttrs = { span: 24 }
   getHtml(meta: IComponentMetadata, content: string): string {
     return `<el-form class="el-row el-col-${meta.attrs?.span} ${meta.attrs?.class}">${content}</el-form>`
-  }
-  getScript(meta: IComponentMetadata): string {
-    throw new Error('Method not implemented.')
   }
 }
