@@ -17,6 +17,7 @@
     "monaco-editor-nls": "^2.0.0",
     "monaco-editor-vue3": "^0.1.5",
     "monaco-editor-webpack-plugin": "6.x",
+    "pixi.js": "^6.2.2",
     "qs": "^6.10.3",
     "tiny-emitter": "^2.1.0",
     "vue": "^3.0.0",
